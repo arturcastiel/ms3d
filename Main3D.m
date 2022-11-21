@@ -1,6 +1,6 @@
 clear
 clc
-
+path(path,'bk3d');
 global vertex element face options sist fracture
 
 for caso = 20
@@ -12,6 +12,8 @@ for malha = 1:1
 %nomemalha = sprintf('fivespot3D_%u.msh',malha);
 % nomemalha = sprintf('benchtetra_%u.msh',malha);
 nomemalha = sprintf('hollowcube_%u.msh',malha);
+nomemalha = sprintf('2halfhollowcube_4.msh');
+
 % nomemalha = sprintf('2halfhollowcube_%u.msh',malha);
 % nomemalha = sprintf('oblique-fracture_%u.msh',i);
 
@@ -38,6 +40,11 @@ for slope = 2:2
 
     [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
     
+    
+    [coord, elem, F, fElem, bfaces] = create_msentities("2halfhollowcube_1.msh")
+
+
+
     [ Keq, GV ] = complementaprep3D;
 
     pesos3D( Keq, GV );
