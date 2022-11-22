@@ -1,14 +1,16 @@
-function [coord, elem, F, fElem, bfaces, element_center, face_center] = read_bkgrid(verifymshfile)
+function [coord, elem, F, fElem, bfaces, element_center, face_center, face_neighbours] = read_bkgrid(verifymshfile)
 [coord,nnode] = read_coord(verifymshfile);
 [elem] = read_elem(verifymshfile, nnode);
-[F, fElem, bfaces] = create_faces(elem);
+[F, fElem, bfaces, face_neighbours] = create_bkfaces(elem);
 element_center = findcentelem(coord, elem);
 face_center = findcentelem(coord, F);
+
 end
 
 function [coord,nnode] = read_coord(verifymshfile)
-verifymshfile = [pwd '\Malhas\' verifymshfile];
-verifymshfile = strjoin(verifymshfile,'');
+%verifymshfile = [pwd '\Malhas\' verifymshfile];
+verifymshfile = pwd+"\Malhas\"+verifymshfile;
+%verifymshfile = strjoin(verifymshfile,'');
 readmsh = fopen(verifymshfile);
 %"nnode" is the number of nodes in the discrete domain
 getmshdata = textscan(readmsh,'%u',1,'HeaderLines',4);
@@ -37,7 +39,7 @@ A = openCell(verifymshfile);
 flag = 0;
 for index = nnode+9 : (size(A,2) - 2)
     tline = str2num(A{index});
-    if (flag == 0) & ((tline(2) ~= 15) &  (tline(2) ~= 1) &   (tline(2) ~= 2))
+    if (flag == 0) & ((tline(2) ~= 15) &  (tline(2) ~= 1) &   (tline(2) ~= 2)) &   (tline(2) ~= 3)
         flag = index;
     end
 end

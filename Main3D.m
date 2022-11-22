@@ -40,8 +40,10 @@ for slope = 2:2
 
     [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
     
-    
-    [coord, elem, F, fElem, bfaces] = create_msentities("2halfhollowcube_1.msh")
+    coarse_example = "2halfhollowcube_1.msh";
+    coarse_example = "cube03.msh";
+
+    [coord, elem, F, fElem, bfaces] = create_msentities(coarse_example)
 
 
 
@@ -55,7 +57,7 @@ for slope = 2:2
 
     [ eL2, gradL2 ] = Erro3D( p, G, NG );
 
-    postprocessor3D( p, 1 );
+    postprocessor3D( p, 'Output',1 );
     
 end
 
