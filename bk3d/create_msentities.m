@@ -4,14 +4,16 @@ function [coord, elem, F, fElem, bfaces] = create_msentities(file_coarse)
 %%creating background grid
 bkgrid = struct
 [bkgrid.coord, bkgrid.elem, bkgrid.faces_adj, bkgrid.elem_faces, bkgrid.bfaces, ...
-    bkgrid.element_center, bkgrid.face_center, bkgrid.face_neighbours]  = read_bkgrid(file_coarse);
+    bkgrid.element_center, bkgrid.face_center, bkgrid.face_neighbours, bkgrid.face_normals]  = read_bkgrid(file_coarse);
 %% creating primal coarse grid entities
 pcoarse = struct
 [pcoarse.elemloc] = create_primalcoarse_volumes(bkgrid);
 % finding the centers of the primal coarse volume
 [pcoarse.centers] = define_pcenters(bkgrid,pcoarse.elemloc);
 % defining primal coarse faces
-create_coarse_face(bkgrid,pcoarse)
+[pcoarse.faces] = create_coarse_face(bkgrid,pcoarse);
+[pcoarse.face_centers] = create_coarse_face_centers(pcoarse, bkgrid);
+1
 postprocessor3D( pcoarse.elemloc, 'primal', 1 );
 %postprocessor3D( pcoarse.elemloc - elemloc2, 'diff', 1 );
 

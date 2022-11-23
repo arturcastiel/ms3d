@@ -1,9 +1,11 @@
-function [coord, elem, F, fElem, bfaces, element_center, face_center, face_neighbours] = read_bkgrid(verifymshfile)
+function [coord, elem, F, fElem, bfaces, element_center, face_center, face_neighbours, normals] = read_bkgrid(verifymshfile)
 [coord,nnode] = read_coord(verifymshfile);
 [elem] = read_elem(verifymshfile, nnode);
 [F, fElem, bfaces, face_neighbours] = create_bkfaces(elem);
 element_center = findcentelem(coord, elem);
 face_center = findcentelem(coord, F);
+normals = compute_normals(F,coord);
+
 
 end
 

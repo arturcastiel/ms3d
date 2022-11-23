@@ -15,8 +15,6 @@ for malha = 1:1
 % nomemalha = sprintf('benchtetra_%u.msh',malha);
 nomemalha = sprintf('hollowcube_%u.msh',malha);
 nomemalha = sprintf('2halfhollowcube_4.msh');
-nomemalha = sprintf('benchtetra_6.msh');
-
 
 % nomemalha = sprintf('2halfhollowcube_%u.msh',malha);
 % nomemalha = sprintf('oblique-fracture_%u.msh',i);

@@ -13,7 +13,7 @@ function [cloc] = primal_candidate(bkgrid)
     global element
     nel = size(bkgrid.elem,1);
     cloc = zeros(size(element.vertices,1),1);
-    normals = compute_normals(bkgrid.faces_adj(:,1:3),bkgrid.coord);
+    normals = bkgrid.face_normals;
     for ii = 1:nel
             faces = bkgrid.elem_faces(ii,:);
             faces = faces(faces ~=0);
