@@ -15,9 +15,10 @@ for malha = 1:1
 % nomemalha = sprintf('benchtetra_%u.msh',malha);
 nomemalha = sprintf('hollowcube_%u.msh',malha);
 nomemalha = sprintf('2halfhollowcube_4.msh');
-nomemalha = sprintf('benchtetra_6.msh');
+nomemalha = sprintf('benchtetra_.msh');
+%nomemalha = sprintf('cube_tet.msh');
 
-
+nomemalha = sprintf('benchtetra_7.msh');
 % nomemalha = sprintf('2halfhollowcube_%u.msh',malha);
 % nomemalha = sprintf('oblique-fracture_%u.msh',i);
 
@@ -53,8 +54,12 @@ for slope = 2:2
 
     coarse_example = "2halfhollowcube_1.msh";
     coarse_example = "cube03.msh";
+            coarse_example = "cube_hex.msh";
 
-    [coord, elem, F, fElem, bfaces] = create_msentities(coarse_example)
+    coarse_example = "cube_hex3x3.msh";
+
+
+    [bkgrid, pcoarse, bkdual] = create_msentities(coarse_example);
 
 
 

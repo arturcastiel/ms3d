@@ -137,6 +137,11 @@ if nbedge > 0
     bedgeaux = cell2mat(getmshdata);
     bedgeref(1:nbedge,5) = bedgeaux(:,1); 
     bedgeref(1:nbedge,1:3) = bedgeaux(:,2:4); 
+elseif nbedge == 0
+    H1 = 7 + nnode + sum(entitype == 15) + sum(entitype == 1);
+    getmshdata = textscan(readmsh,'%*u %*u %*u %u %*u %u %u %u',nbedge,...
+        'HeaderLines',H1);
+    bedgeref = [];
 end  %End of second IF
 
 if nelem > 0
