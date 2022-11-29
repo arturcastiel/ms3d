@@ -1,12 +1,12 @@
-function [coarse_faces] = create_coarse_face(bkgrid, pcoarse)
+function [coarse_faces] = create_coarse_face(bkgrid, elemloc)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
 global element face
 n = size(bkgrid.face_neighbours,1);
 inedge = [face.inner.montelem face.inner.juselem];
 bedge = face.bound.montelem;
-loc_inedge = pcoarse.elemloc(inedge);
-loc_bedge = pcoarse.elemloc(bedge);
+loc_inedge = elemloc(inedge);
+loc_bedge = elemloc(bedge);
 ref_dif = loc_inedge(:,1) ~= loc_inedge(:,2);
 num_fine_internal = size(face.inner.juselem,1);
 num_fine_faces = size(face.inner.juselem,1) + size(face.bound.montelem,1);

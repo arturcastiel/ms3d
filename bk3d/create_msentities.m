@@ -1,19 +1,22 @@
-function [coord, elem, F, fElem, bfaces] = create_msentities(file_coarse)
+function [bkgrid, pcoarse, bkdual] = create_msentities(file_coarse)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 %%creating background grid
 bkgrid = struct
-[bkgrid.coord, bkgrid.elem, bkgrid.faces_adj, bkgrid.elem_faces, bkgrid.bfaces, ...
-    bkgrid.element_center, bkgrid.face_center, bkgrid.face_neighbours, bkgrid.face_normals]  = read_bkgrid(file_coarse);
+[bkgrid.coord, bkgrid.elem, bkgrid.faces_adj, bkgrid.elem_faces, ...
+    bkgrid.bfaces, bkgrid.element_center, bkgrid.face_center, ...
+    bkgrid.face_neighbours, bkgrid.face_normals, bkgrid.edges, ...
+    bkgrid.face_edges, bkgrid.elem_edges, bkgrid.edge_centers]  = ...
+    read_bkgrid(file_coarse);
 %% creating primal coarse grid entities
 pcoarse = struct
-[pcoarse.elemloc] = create_primalcoarse_volumes(bkgrid);
-% finding the centers of the primal coarse volume
-[pcoarse.centers] = define_pcenters(bkgrid,pcoarse.elemloc);
-% defining primal coarse faces
-[pcoarse.faces] = create_coarse_face(bkgrid,pcoarse);
-[pcoarse.face_centers] = create_coarse_face_centers(pcoarse, bkgrid);
-1
+[pcoarse.elemloc,pcoarse.centers,pcoarse.faces,pcoarse.face_centers] = ...
+    create_primal_coarse_entities(bkgrid);
+
+%% creating bkdual grid
+bkdual = struct
+[outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse);
+
 postprocessor3D( pcoarse.elemloc, 'primal', 1 );
 %postprocessor3D( pcoarse.elemloc - elemloc2, 'diff', 1 );
 

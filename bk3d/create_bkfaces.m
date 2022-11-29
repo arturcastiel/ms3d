@@ -33,7 +33,8 @@ elseif flag == 1
 
 end
 F = [F_trian; F_quad];
-F = sort(F,2);
+%F = sort(F,2);
+F = shift_left(F);
 F = unique(F,'rows');
 flag = zeros(size(elem,1),1);
 fElem = zeros(size(elem,1),6);

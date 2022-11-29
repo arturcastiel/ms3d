@@ -4,6 +4,8 @@ n = size(element.volume,1)
 value = zeros(n,1);
 %% testing inner coarse faces
 aux = bkgrid.face_neighbours(ii,:);
+
+
 if aux(2) ~= 0 
     list_faces = pcoarse.faces(:,ii);
     list_el1 = face.inner.juselem(list_faces);
