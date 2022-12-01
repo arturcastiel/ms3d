@@ -18,7 +18,7 @@ nomemalha = sprintf('2halfhollowcube_4.msh');
 nomemalha = sprintf('benchtetra_.msh');
 %nomemalha = sprintf('cube_tet.msh');
 
-nomemalha = sprintf('benchtetra_7.msh');
+nomemalha = sprintf('benchtetra_8.msh');
 % nomemalha = sprintf('2halfhollowcube_%u.msh',malha);
 % nomemalha = sprintf('oblique-fracture_%u.msh',i);
 
@@ -42,13 +42,11 @@ for slope = 2:2
     fprintf(opt,'%s\n\n\n\n\n\n',querlim); 
     fprintf(opt,'%s','Teste_1');
     fclose(opt);
-
-    [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
     
-    %% adding the centers of the faces to the original preprocessor
-    face.bound.centroid = findcentelem(vertex.coord, face.bound.vertices);
-    face.inner.centroid = findcentelem(vertex.coord, face.inner.vertices);
-
+    tic
+    [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
+    toc
+    1
     %%
 
 

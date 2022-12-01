@@ -27,10 +27,12 @@ else
     [ elem, bedgeref, nflag ] = getelem( filepath, nnode, nflag );
 
     %"bedge" and "inedge" - It get inform. about boundary and internal edges:
-    [ bedge, inedge, centelem, elemvolume ] = getinfo( coord, elem, bedgeref );
-
+    %[ bedge, inedge, centelem, elemvolume ] = getinfo( coord, elem, bedgeref );
+    [ bedge, inedge, centelem, elemvolume ] = getinfospeed( coord, elem, bedgeref );
     %"esurn1" and "esurn2" - Elements surrounding nodes:
-    [ esurn1, esurn2 ] = getesurn( elem, coord );
+    [ esurn1, esurn2 ] = getesurnspeed( elem);
+    %continua os testes amanha
+    %[ esurn3, esurn4 ] = getesurn( elem, coord );
 
     %"elemface" and "normals" - Faces in elements with normals:
     [ elemface, innormals, bounnormals ] = idelemface3D( elem, inedge, bedge, coord, centelem );
@@ -47,6 +49,10 @@ else
     face.bound.montelem = bedge(:,4); face.bound.normal = bounnormals; 
     face.inner.vertices = inedge(:,1:3); face.inner.montelem = inedge(:,4); 
     face.inner.juselem = inedge(:,5); face.inner.normal = innormals; 
+
+     %% adding the centers of the faces to the original preprocessor
+    face.bound.centroid = findcentelem(vertex.coord, face.bound.vertices);
+    face.inner.centroid = findcentelem(vertex.coord, face.inner.vertices);
 
     save(sprintf('%s\\vertex',folderpath),'vertex');
     save(sprintf('%s\\element',folderpath),'element');
@@ -179,6 +185,8 @@ espnode = sum(entitype == 15);
 nflag(1:espnode) = auxmat(1:espnode,2);
 %Close the *.msh file
 fclose(readmsh);
+
+
 
 %--------------------------------------------------------------------------
 %FUNCTION "getinfoedge"

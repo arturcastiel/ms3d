@@ -1,5 +1,6 @@
 function wells = calcwells( element, vertex )
 %
+% ref_dirch_node = vertex.flag;
 
 dirnodes = find(vertex.flag<200);
 

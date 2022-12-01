@@ -154,7 +154,7 @@ elseif caso==20
     syms x y z
     f = {@(x,y,z) x+y+z, @(x,y,z) x+y+z};
     K = {@(x,y,z) [1 0 0;0 1 0;0 0 1]};
-    wells = calcwells( element, vertex );
+    wells = calcwellsspeed( element, vertex );
     
 end   
 
