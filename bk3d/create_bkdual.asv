@@ -2,7 +2,6 @@ function [outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 global element vertex
-
 all_faces = false(size(bkgrid.element_center,1),1);
 
 num_semifaces = sum(sum(bkgrid.elem_edges ~=0));
@@ -11,6 +10,7 @@ dual_faces = false(size(element.volume,1), num_semifaces);
 boundary_support = false(size(element.volume,1), size(bkgrid.elem,1));
 index = 1;
 
+%% creating the semifaces
 for vol = 1:size(bkgrid.elem,1)
     vol_center = bkgrid.element_center(vol,:);
     list_edges = bkgrid.elem_edges(vol,:);
@@ -31,14 +31,19 @@ for vol = 1:size(bkgrid.elem,1)
             plane_normal = cross(plane(2,:) - plane(1,:), ...
                 plane(3,:) - plane(1,:));
             plane_center = mean(plane);
-            fsvol_adj = element.vertices(mref,:);
+            %%
+            ref_elem = plane_boundbox(plane, plane_normal, plane_center, ...
+                element.centroid(mref,:));
+            fsvol_adj = element.vertices(ref_elem,:);
             list_local_nodes = setdiff(unique(fsvol_adj),0);
             local_coords = vertex.coord(list_local_nodes,:);
             node_analyzes = zeros(max(list_local_nodes),1);
             node_analyzes(list_local_nodes) = 1;
-            %% ajustar aqui para terminar a escolha das faces
-            ref = plane_boundbox(plane, plane_normal, plane_center, ...
-                local_coords);
+%             %% ajustar aqui para terminar a escolha das faces
+%             ref = plane_boundbox(plane, plane_normal, plane_center, ...
+%                 local_coords);
+            
+            %%
             node_analyzes(node_analyzes == 1) = ref;
                 %is_split_by_plane(plane, fsvol_adj, vertex.coord)
             [nref] = is_split_by_plane(local_coords(ref,:), plane_normal , ...
@@ -64,6 +69,17 @@ for vol = 1:size(bkgrid.elem,1)
         end
     end
 end
+%% checking integrity of semifaces
+
+for ii = 1:size(dual_faces,2)
+%      dual_faces(:,ii) = integrity_face_refactor(dual_faces(:,ii));
+%      dual_faces(:,ii) = integrity_node_refactor(dual_faces(:,ii));
+%       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
+%       dual_faces(:,ii) = integrity_faceclean(dual_faces(:,ii));
+%       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
+%       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
+end
+
 
 %% creating boundaries of the support region of excluding the boundary that
 % connect to the boundaries of the domain
@@ -93,14 +109,11 @@ boundary_edges = find(all(ismember(bkgrid.edges,boundary_nodes),2));
 
 for vol = boundary_element
     list_edges = bkgrid.elem_edges(vol,:);
-    list_edges = list_edges(list_edges ~= 0);
-    
-    boundary_edges = intersect(list_edges, boundary_edges);
-    
-    ref_edges_include = ismember(dual_vol_face_index(:,end), boundary_edges);
+    list_edges = list_edges(list_edges ~= 0);    
+    boundary_edges = intersect(list_edges, boundary_edges);    
+    %ref_edges_include = ismember(dual_vol_face_index(:,end), boundary_edges);
     node_neighbours = setdiff(bkgrid.elem(vol,:),0);
     node_neighbours = intersect(node_neighbours,boundary_nodes)';
-
     vol_neighbours = any(ismember(bkgrid.elem,node_neighbours),2);
     vol_neighbours(vol) = false;
     vol_neighbours = [find(vol_neighbours)];
@@ -108,26 +121,24 @@ for vol = boundary_element
     ref_vol_neigh = any(ismember(dual_vol_face_index(:,1:3),vol_neighbours),2);
     auxmat = (bkgrid.edges(dual_vol_face_index(:,end),:));
     auxmat = ismember(auxmat,node_neighbours);
-    ref = ref_notself & ref_vol_neigh & (xor(auxmat(:,1),auxmat(:,2)));
-    % as arestas que devem ser incluidas compartilham um no com alguma das
-    % arestas do volume de controle
-    %dual_vol_face_index
-%     ref1 = dual_vol_face_index(:,2) == 0;
-%     ref2 = dual_vol_face_index(:,3) == 0;
-%     ref = dual_vol_face_index(:,1) ~= vol;
-%     ref = ref &  ref_edges_include;
-
-
-%     
-%     ref = any(dual_vol_face_index(:,1:2) == 0,2);
-%     boundary_vol_neighbours = intersect(boundary_element, vol_neighbours);
-%     auxmat = ismember(dual_vol_face_index(:,1:3),boundary_vol_neighbours);
-%     auxmat = auxmat(:,1) & (auxmat(:,2) | auxmat(:,3));
-%     auxmat = auxmat & ref & ref_edges_include;
+    auxmat = xor(auxmat(:,1),auxmat(:,2));
+    ref_edges = ~ismember(dual_vol_face_index(:,end),list_edges);
+    ref = ref_notself & ref_vol_neigh & auxmat & ref_edges;
     semi_faces_in_support = find(ref)';
     for face = semi_faces_in_support
         boundary_support(:, vol) = boundary_support(:, vol) | dual_faces(:,face) ;
     end
+end
+1
+
+
+for ii = 1:size(boundary_support,2)
+%      boundary_support(:,ii) = integrity_face_refactor(boundary_support(:,ii));
+%      boundary_support(:,ii) = integrity_node_refactor(boundary_support(:,ii));
+%       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
+%      boundary_support(:,ii) = integrity_faceclean(boundary_support(:,ii));
+%       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
+%       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
 end
 
 
