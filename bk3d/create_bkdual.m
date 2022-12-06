@@ -140,8 +140,6 @@ for bface = 1:size(bkgrid.bfaces,1)
     analyzed_volumes = ismember(pcoarse.elemloc,auxvec);
     %ref = ismember(dual_vol_face_index(:,1),[coarse_left, coarse_right]);
     %analyzed_volumes = any(dual_faces(:,ref),2);
-
-
     analyzed_faces = unique(element.faces(analyzed_volumes,:));
     left_fine_center_coord = element.centroid(pcoarse.centers(coarse_left),:);
     if coarse_right ~=0
