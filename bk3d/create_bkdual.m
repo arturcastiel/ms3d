@@ -1,11 +1,14 @@
 function [outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
-global element vertex
+global element vertex face
 all_faces = false(size(bkgrid.element_center,1),1);
 
 num_semifaces = sum(sum(bkgrid.elem_edges ~=0));
 dual_vol_face_index = zeros(num_semifaces,3+1);
+
+dual_face_ref = zeros(num_semifaces,2);
+
 dual_faces = false(size(element.volume,1), num_semifaces);
 boundary_support = false(size(element.volume,1), size(bkgrid.elem,1));
 index = 1;
@@ -18,12 +21,12 @@ for vol = 1:size(bkgrid.elem,1)
     list_faces = bkgrid.elem_faces(vol,:);
     list_faces = list_faces(list_faces ~= 0);
     mref = pcoarse.elemloc == vol;
-    for edge = list_edges 
-        if edge ~= 0 
+    for edge = list_edges
+        if edge ~= 0
             cmref = mref;
             edge_center = bkgrid.edge_centers(edge,:);
             list_faces_sharing_edge = ...
-              intersect(find(any(bkgrid.face_edges == edge,2)),list_faces);
+                intersect(find(any(bkgrid.face_edges == edge,2)),list_faces);
             shared_faces_center = ...
                 bkgrid.face_center(list_faces_sharing_edge,:);
             plane = [edge_center; shared_faces_center(1,:); vol_center; ...
@@ -40,13 +43,6 @@ for vol = 1:size(bkgrid.elem,1)
             local_coords = vertex.coord(list_local_nodes,:);
             node_analyzes = zeros(max(list_local_nodes),1);
             node_analyzes(list_local_nodes) = 1;
-%             %% ajustar aqui para terminar a escolha das faces
-%             ref = plane_boundbox(plane, plane_normal, plane_center, ...
-%                 local_coords);
-            
-            %%
-            %node_analyzes(node_analyzes == 1) = ref;
-                %is_split_by_plane(plane, fsvol_adj, vertex.coord)
             [nref] = is_split_by_plane(local_coords, plane_normal , ...
                 plane_center);
             node_analyzes(node_analyzes == 1) = nref;
@@ -59,6 +55,7 @@ for vol = 1:size(bkgrid.elem,1)
             %debug_dualface
             employed_volumes = ...
                 setdiff(unique(bkgrid.face_neighbours(list_faces_sharing_edge,:)),vol)';
+            dual_face_ref(index,:) = list_faces_sharing_edge';
             if employed_volumes == 0
                 dual_vol_face_index(index,1) = vol;
                 dual_vol_face_index(index,end) = edge;
@@ -73,12 +70,12 @@ end
 %% checking integrity of semifaces
 
 for ii = 1:size(dual_faces,2)
-%      dual_faces(:,ii) = integrity_face_refactor(dual_faces(:,ii));
-%      dual_faces(:,ii) = integrity_node_refactor(dual_faces(:,ii));
-%       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
-%       dual_faces(:,ii) = integrity_faceclean(dual_faces(:,ii));
-%       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
-%       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
+    dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
+    %      dual_faces(:,ii) = integrity_node_refactor(dual_faces(:,ii));
+    %       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
+    %       dual_faces(:,ii) = integrity_faceclean(dual_faces(:,ii));
+    %       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
+    %       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
 end
 
 
@@ -93,8 +90,8 @@ for vol = 1:size(bkgrid.elem,1)
     semi_faces_in_support = all(ismember(dual_vol_face_index(:,1:3),find(vol_neighbours)),2);
     ref = ~ismember(dual_vol_face_index(:,end),list_edges);
     semi_faces_in_support = semi_faces_in_support & ref;
-    for face = find(semi_faces_in_support)'
-        boundary_support(:, vol) = boundary_support(:, vol) | dual_faces(:,face) ;
+    for index_face = find(semi_faces_in_support)'
+        boundary_support(:, vol) = boundary_support(:, vol) | dual_faces(:,index_face) ;
     end
 end
 
@@ -110,8 +107,8 @@ boundary_edges = find(all(ismember(bkgrid.edges,boundary_nodes),2));
 
 for vol = boundary_element
     list_edges = bkgrid.elem_edges(vol,:);
-    list_edges = list_edges(list_edges ~= 0);    
-    boundary_edges = intersect(list_edges, boundary_edges);    
+    list_edges = list_edges(list_edges ~= 0);
+    boundary_edges = intersect(list_edges, boundary_edges);
     %ref_edges_include = ismember(dual_vol_face_index(:,end), boundary_edges);
     node_neighbours = setdiff(bkgrid.elem(vol,:),0);
     node_neighbours = intersect(node_neighbours,boundary_nodes)';
@@ -126,20 +123,67 @@ for vol = boundary_element
     ref_edges = ~ismember(dual_vol_face_index(:,end),list_edges);
     ref = ref_notself & ref_vol_neigh & auxmat & ref_edges;
     semi_faces_in_support = find(ref)';
-    for face = semi_faces_in_support
-        boundary_support(:, vol) = boundary_support(:, vol) | dual_faces(:,face) ;
+    for index_face = semi_faces_in_support
+        boundary_support(:, vol) = boundary_support(:, vol) | dual_faces(:,index_face) ;
     end
 end
+
+
+%% creating the edges
+%
+edges = false(size(bkgrid.bfaces,1),size(element.centroid,1))';
+num_internal_faces = size(face.inner.centroid,1);
+for bface = 1:size(bkgrid.bfaces,1)
+    auxvec = bkgrid.face_neighbours(bface,:);
+    coarse_left = auxvec(1);
+    coarse_right = auxvec(2);
+    analyzed_volumes = ismember(pcoarse.elemloc,auxvec);
+    %ref = ismember(dual_vol_face_index(:,1),[coarse_left, coarse_right]);
+    %analyzed_volumes = any(dual_faces(:,ref),2);
+
+
+    analyzed_faces = unique(element.faces(analyzed_volumes,:));
+    left_fine_center_coord = element.centroid(pcoarse.centers(coarse_left),:);
+    if coarse_right ~=0
+        right_fine_center_coord = element.centroid(pcoarse.centers(coarse_right),:);
+    else
+        fine_face_center = pcoarse.face_centers(bface,:);
+        if fine_face_center > num_internal_faces
+            right_fine_center_coord = ...
+                face.bound.centroid(fine_face_center - num_internal_faces,:);
+        else
+            right_fine_center_coord = ...
+                face.inner.centroid(fine_face_center,:);
+        end
+    end
+    reff = check_if_line_crosses_plane(analyzed_faces, ...
+        left_fine_center_coord, right_fine_center_coord);
+    refv = any(ismember(element.faces(analyzed_volumes,:),analyzed_faces(reff)),2);
+    analyzed_volumes(analyzed_volumes) = refv;
+    edges(:,bface) = edges(:,bface) | analyzed_volumes;
+end
+1
+% semi_edges = false(size(bkgrid.bfaces,1),size(element.centroid,1))';
+% for vol = 1:size(bkgrid.elem,1)
+%     face_neigh = bkgrid.elem_faces(vol,:);
+%     for face = face_neigh
+%         ref = dual_vol_face_index(:,1) == vol;
+%         internal_faces = dual_face_ref(ref,:);
+%         local_ref = any(ismember(internal_faces,face),2);
+%         ref(ref) = local_ref;
+%         semi_edges(:,face) = semi_edges(:,face) | all(dual_faces(:,ref),2);
+%     end
+% end
+
 1
 
-
 for ii = 1:size(boundary_support,2)
-%      boundary_support(:,ii) = integrity_face_refactor(boundary_support(:,ii));
-%      boundary_support(:,ii) = integrity_node_refactor(boundary_support(:,ii));
-%       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
-%      boundary_support(:,ii) = integrity_faceclean(boundary_support(:,ii));
-%       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
-%       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
+    %    boundary_support(:,ii) = integrity_face(boundary_support(:,ii));
+    %      boundary_support(:,ii) = integrity_node_refactor(boundary_support(:,ii));
+    %       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
+    %      boundary_support(:,ii) = integrity_faceclean(boundary_support(:,ii));
+    %       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
+    %       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
 end
 
 
