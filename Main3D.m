@@ -4,6 +4,7 @@ path(path,'bk3d');
 path(path,'debug');
 
 global vertex element face options sist fracture
+msconfig = create_multiscale_config_structure();
 
 for caso = 20
 
@@ -45,24 +46,18 @@ for slope = 2:2
     
     tic
     [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
+  
+
+
+if msconfig.run_ms
+    [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
+end
     toc
-    1
-    %%
 
-
-    coarse_example = "2halfhollowcube_1.msh";
-    coarse_example = "cube03.msh";
-            coarse_example = "cube_hex.msh";
-
-    coarse_example = "cube_hex3x3.msh";
-
-
-    [bkgrid, pcoarse, bkdual] = create_msentities(coarse_example);
-
-
-
+     tic
+     %calculo das transm TPFA, calculo do GV e ASSMBY
     [ Keq, GV ] = complementaprep3D;
-
+toc
     pesos3D( Keq, GV );
 
     p = solver3D( wells, Keq, GV );

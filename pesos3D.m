@@ -14,22 +14,17 @@ for i=1:size(vertex.elsurvertpointer,2)
             posvelem = vertex.elsurvertpointer(i):size(vertex.elsurvertex,2);
         else
             posvelem = vertex.elsurvertpointer(i):vertex.elsurvertpointer(i+1)-1;
-        end 
-        
-        velem = vertex.elsurvertex(posvelem);
-        
+        end         
+        velem = vertex.elsurvertex(posvelem);        
         [ W, A ] = calcWA3D( velem, i );
-
         if sum(W)~=0
             a(i) = sum(A)/sum(W); W = W/sum(W); w(posvelem) = W;
         end
-
         clear velem W A
-
         [ sist.Mcdt, sist.Bcdt ] = contribuvertex3D( sist.Mcdt, sist.Bcdt, Keq, GV, w, a, i );
     
     else
-        
+        %% se o vertice for de dirichlet pegue o valor de dirichlet
         reg4 = vertex.flag(i)-100; 
         pV = options.solanalit{reg4}(vertex.coord(i,1),vertex.coord(i,2),vertex.coord(i,3));
         for j=1:3

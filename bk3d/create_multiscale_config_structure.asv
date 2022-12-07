@@ -1,0 +1,12 @@
+function msconfig = 
+% STRUCT FOR THE CONFIG OF THE MULTISCALE METHODS
+msconfig.run_ms = true;
+msconfig = struct;
+msconfig.bkgrid_mesh = "cube_hex3x3.msh";
+msconfig.read_msh_file = true;
+msconfig.create_msh = true;
+msconfig.coarsening = [3 3 3];
+% 
+% bkgrid_ = "cube03.msh";
+%     coarse_example = "cube_hex.msh";
+%     coarse_example = "cube_hex3x3.msh";

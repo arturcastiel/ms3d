@@ -3,10 +3,8 @@ function [outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse)
 %   Detailed explanation goes here
 global element vertex face
 all_faces = false(size(bkgrid.element_center,1),1);
-
 num_semifaces = sum(sum(bkgrid.elem_edges ~=0));
 dual_vol_face_index = zeros(num_semifaces,3+1);
-
 dual_face_ref = zeros(num_semifaces,2);
 
 dual_faces = false(size(element.volume,1), num_semifaces);
@@ -173,22 +171,27 @@ end
 %     end
 % end
 
-1
-
-for ii = 1:size(boundary_support,2)
-    %    boundary_support(:,ii) = integrity_face(boundary_support(:,ii));
-    %      boundary_support(:,ii) = integrity_node_refactor(boundary_support(:,ii));
-    %       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
-    %      boundary_support(:,ii) = integrity_faceclean(boundary_support(:,ii));
-    %       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
-    %       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
-end
+% 1
+% 
+% for ii = 1:size(boundary_support,2)
+%     %    boundary_support(:,ii) = integrity_face(boundary_support(:,ii));
+%     %      boundary_support(:,ii) = integrity_node_refactor(boundary_support(:,ii));
+%     %       dual_faces(:,ii) = integrity_nodeclean(dual_faces(:,ii));
+%     %      boundary_support(:,ii) = integrity_faceclean(boundary_support(:,ii));
+%     %       dual_faces(:,ii) = integrity_node(dual_faces(:,ii));
+%     %       dual_faces(:,ii) = integrity_face(dual_faces(:,ii));
+% end
 
 
 postprocessor3D( dual_faces(:,35), 'all_faces', 1 );
-outputArg1 = inputArg1;
-outputArg2 = inputArg2;
+outputArg1 = 1;
+outputArg2 = 2;
 end
+
+
+
+
+
 
 function [map] = mask_matrix(matrix, mvec)
 ref = matrix(:,end) == 0;
