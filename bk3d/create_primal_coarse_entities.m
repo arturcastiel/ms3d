@@ -7,5 +7,4 @@ function [elemloc,centers,faces,face_centers] = create_primal_coarse_entities(bk
 % defining primal coarse faces
 [faces] = create_coarse_face(bkgrid,elemloc);
 [face_centers] = create_coarse_face_centers(bkgrid, faces);
-
 end

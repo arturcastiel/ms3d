@@ -1,6 +1,7 @@
 global face pcoarse
 
-
+el = 27;
+%for jj = el
 for jj = 1:max(pcoarse.elemloc)
     ii = jj;
     water_old = pcoarse.elemloc==ii;
@@ -24,6 +25,6 @@ for jj = 1:max(pcoarse.elemloc)
     end
 end
 
-postprocessor3D( boundary_support(:,ii), 'all_faces', 1 );
-postprocessor3D( pcoarse.elemloc==ii, 'volumes', 1 );
+%postprocessor3D( boundary_support(:,ii), 'all_faces', 1 );
+%postprocessor3D( pcoarse.elemloc==ii, 'volumes', 1 );
 

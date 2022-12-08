@@ -4,6 +4,7 @@ path(path,'bk3d');
 path(path,'debug');
 
 global vertex element face options sist fracture
+
 msconfig = create_multiscale_config_structure();
 
 for caso = 20

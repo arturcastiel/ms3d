@@ -1,7 +1,8 @@
-function [bkgrid, pcoarse, bkdual] = create_msentities(msconfig)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
-%%creating background grid
+function [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig)
+%create_msentities Function that create the multiscale entities.
+% bkgrid -> background grid
+% pcoarse-> primal coarse mesh
+% dcoarse-> dual coarse mesh
 bkgrid = struct;
 [bkgrid.coord, bkgrid.elem, bkgrid.faces_adj, bkgrid.elem_faces, ...
     bkgrid.bfaces, bkgrid.element_center, bkgrid.face_center, ...
@@ -14,7 +15,7 @@ pcoarse = struct;
     create_primal_coarse_entities(bkgrid);
 
 %% creating bkdual grid
-bkdual = struct;
+dcoarse = struct;
 [outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse);
 
 %postprocessor3D( pcoarse.elemloc, 'primal', 1 );

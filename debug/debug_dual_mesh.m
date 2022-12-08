@@ -1,15 +1,12 @@
 
-ref_faces = any(boundary_support,2);
-ref_edges = any(edges,2);
-location_vector = zeros(size(ref_edges));
 
-location_vector(ref_faces) = 1;
-
-location_vector(ref_edges) = 2;
-
-location_vector(pcoarse.centers) = 3;
-
-
-postprocessor3D( location_vector, 'dual_coarse_mesh', 1 );
-postprocessor3D( pcoarse.elemloc, 'primal_coarse_mesh', 1 );
-
+postprocessor3D(nodes, 'dual-nodes', 1 );
+postprocessor3D(edges, 'dual-edges', 1 );
+postprocessor3D(faces, 'dual-faces', 1 );
+postprocessor3D(internals, 'dual-internals', 1 );
+dmesh = zeros(size(nodes));
+dmesh(nodes) = 1;
+dmesh(edges) = 2;
+dmesh(faces) = 3;
+dmesh(internals) = 4;
+postprocessor3D(internals, 'dual_coarse_mesh', 1 );
