@@ -16,7 +16,7 @@ pcoarse = struct;
 
 %% creating bkdual grid
 dcoarse = struct;
-[outputArg1,outputArg2] = create_bkdual(bkgrid, pcoarse);
+[outputArg1,outputArg2] = create_dual_coarse_grid(bkgrid, pcoarse);
 
 %postprocessor3D( pcoarse.elemloc, 'primal', 1 );
 %postprocessor3D( pcoarse.elemloc - elemloc2, 'diff', 1 );

@@ -1,7 +1,14 @@
-function [loc_elem] = integrity_face(loc_elem)
-%UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
+function [auxmat] = integrity_face(auxmat)
+%integrity_face Ensures that the elements of a sub_face are always face
+%connected
+%   This is done by ensuring that each internal face appears always twice
+%   in the same group of connected elements
 global element
-count_matrix = count_face_repetition(element.faces(loc_elem,:));
-loc_elem(loc_elem) = any(count_matrix == 2,2);
+num_col = size(auxmat,2);
+for index = 1:num_col
+    loc_elem = auxmat(:,index);
+    count_matrix = count_face_repetition(element.faces(loc_elem,:));
+    loc_elem(loc_elem) = any(count_matrix == 2,2);
+    auxmat(:,index) = loc_elem;
+end
 end

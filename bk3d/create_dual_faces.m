@@ -1,7 +1,10 @@
-function [sub_faces] = create_dual_faces(bkgrid,dual_semi_faces, ...
-                        semi_faces_ref)
-%UNTITLED24 Summary of this function goes here
-%   Detailed explanation goes here
+function [sub_faces] = create_dual_faces(bkgrid, pcoarse)
+%create_dual_faces Function that creates the sub_faces of the dual coarse
+%grid
+
+%% refactory function to remove the need of the semi_faces_ref
+[dual_semi_faces, semi_faces_ref] = create_semifaces(bkgrid,pcoarse);
+%%
 sub_faces = false(size(dual_semi_faces,1),size(bkgrid.edges,1));
 for index_edge = 1:size(bkgrid.edges,1)
     ref = semi_faces_ref(:,end) == index_edge;
