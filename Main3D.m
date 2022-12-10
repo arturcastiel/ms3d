@@ -1,6 +1,8 @@
 clear
 clc
-path(path,'bk3d');
+path(path,'bkgrid3d');
+path(path,'tools');
+
 path(path,'debug');
 
 global vertex element face options sist fracture
@@ -48,17 +50,17 @@ for slope = 2:2
     tic
     [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
   
-
-
 if msconfig.run_ms
     [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
 end
-    toc
+   
 
-     tic
+toc
+
+     
      %calculo das transm TPFA, calculo do GV e ASSMBY
     [ Keq, GV ] = complementaprep3D;
-toc
+
     pesos3D( Keq, GV );
 
     p = solver3D( wells, Keq, GV );
