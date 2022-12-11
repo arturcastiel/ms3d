@@ -5,7 +5,6 @@ function [bedge,inedge,centelem,elemvolume] = getinfospeed(coord,elem,bedgeref)
 
 
 elem_adj = elem(:,1:end-1);
-
 flag = 0;
 if all(elem_adj(:,end) == 0)
     elem_adj = elem_adj(:, 1:4);
@@ -58,10 +57,10 @@ bedge = [F(ref_bedge,:) elem_bneigh];
 elem_ineigh =  elem_ineigh(sort_ref,:);
 elem_ineigh = reshape(elem_ineigh',2,[])';
 inedge = [F(ref_inedge,:) elem_ineigh];
-[centelem]  = findcentelem(coord, elem(:,1:end-1));
-[elemvolume] = volume_tetrahedron(coord,elem);
+
 [baux] = sort(bedgeref(:,1:3),2);
 [~,ref] = sortrows(baux,2);
 bedge = [bedge bedgeref(ref,end)];
-
+[centelem]  = findcentelem(coord, elem(:,1:end-1));
+[elemvolume] = volume_tetrahedron(coord,elem);
 end

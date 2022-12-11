@@ -6,29 +6,34 @@ num_inner_faces = size(face.inner.centroid,1);
 ref_bfaces = list_faces > num_inner_faces;
 face_center = zeros(size(list_faces,1),3);
 face_normal = zeros(size(list_faces,1),3);
-face_center(~ref_bfaces,:) = face.inner.centroid(list_faces(~ref_bfaces),:);
-face_center(ref_bfaces,:) = face.bound.centroid((list_faces(ref_bfaces) - num_inner_faces),:);
-face_normal(~ref_bfaces,:) = face.inner.normal(list_faces(~ref_bfaces),:);
-face_normal(ref_bfaces,:) = face.bound.normal((list_faces(ref_bfaces) - num_inner_faces),:);
+face_center(~ref_bfaces,:) = ...
+    face.inner.centroid(list_faces(~ref_bfaces),:);
+face_center(ref_bfaces,:) = ...
+    face.bound.centroid((list_faces(ref_bfaces) - num_inner_faces),:);
+face_normal(~ref_bfaces,:) = ...
+    face.inner.normal(list_faces(~ref_bfaces),:);
+face_normal(ref_bfaces,:) = ...
+    face.bound.normal((list_faces(ref_bfaces) - num_inner_faces),:);
 face_normal = face_normal ./ vecnorm(face_normal,2,2);
 p1(ref_bfaces,:) = ...
     vertex.coord(face.bound.vertices(list_faces(ref_bfaces) - num_inner_faces ,1),:);
 p1(~ref_bfaces,:) = ...
     vertex.coord(face.inner.vertices(list_faces(~ref_bfaces),1),:);
 p2(ref_bfaces,:) = ...
-    vertex.coord(face.bound.vertices(list_faces(ref_bfaces) - num_inner_faces ,2),:);
+    vertex.coord(face.bound.vertices(list_faces(ref_bfaces) - ...
+    num_inner_faces ,2),:);
 p2(~ref_bfaces,:) = ...
     vertex.coord(face.inner.vertices(list_faces(~ref_bfaces),2),:);
 p3(ref_bfaces,:) = ...
-    vertex.coord(face.bound.vertices(list_faces(ref_bfaces) - num_inner_faces ,3),:);
+    vertex.coord(face.bound.vertices(list_faces(ref_bfaces) - ...
+    num_inner_faces ,3),:);
 p3(~ref_bfaces,:) = ...
     vertex.coord(face.inner.vertices(list_faces(~ref_bfaces),3),:);
 vecline = p_right - p_left;
-p_intersect = ...
-    point_plane_intersection(p_left ...
-    , vecline, face_center  ,face_normal);
+p_intersect = point_plane_intersection(p_left, vecline, face_center,  ...
+                                       face_normal);
 ref = check_point_in_triang(p_intersect, p1,p2,p3) & ...
-  check_if_point_in_middle_semi_line(p_intersect, p_left, p_right);
+        check_if_point_in_middle_semi_line(p_intersect, p_left, p_right);
 
 end
 
@@ -53,7 +58,6 @@ Apartial = A1+A2+A3;
 ref = abs(Atotal-Apartial) <= tol;
 end
 
-
 function [p_intersect ] = point_plane_intersection(pv, vecv, pp, vecp)
 % pv -> point in line, vecv-> vector in the direction of the line
 % pp -> point in plane, vecp-> normal vector
@@ -61,14 +65,6 @@ pv = repmat(pv,size(pp,1),1);
 vecv = repmat(vecv,size(pp,1),1);
 t = dot(vecp,pp-pv,2) ./ dot(vecp,vecv,2);
 p_intersect = pv + t.*vecv;
-
-%  th = dot(vecp,pp,2) - dot(vecv,pv,2)./ dot(vecp,vecv,2);
-%  p_intersecth = pv + th.*vecv;
 end
 
 
-function [area] = calc_area_triang(p1,p2,p3)
-vec1 = p2-p1;
-vec2 = p3-p1;
-area = vecnorm(cross(vec1,vec2,2),2,2)*0.5;
-end

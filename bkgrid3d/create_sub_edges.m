@@ -9,14 +9,17 @@ for bface = 1:size(bkgrid.bfaces,1)
     coarse_right = auxvec(2);
     analyzed_volumes = ismember(pcoarse.elemloc,auxvec);
     analyzed_faces = unique(element.faces(analyzed_volumes,:));
-    left_fine_center_coord = element.centroid(pcoarse.centers(coarse_left),:);
+    left_fine_center_coord = element.centroid(...
+            pcoarse.centers(coarse_left),:);
     if coarse_right ~=0
-        right_fine_center_coord = element.centroid(pcoarse.centers(coarse_right),:);
+        right_fine_center_coord = element.centroid(...
+            pcoarse.centers(coarse_right),:);
     else
         fine_face_center = pcoarse.face_centers(bface,:);
         if fine_face_center > num_internal_faces
             right_fine_center_coord = ...
-                face.bound.centroid(fine_face_center - num_internal_faces,:);
+                face.bound.centroid(fine_face_center - ...
+                                    num_internal_faces,:);
         else
             right_fine_center_coord = ...
                 face.inner.centroid(fine_face_center,:);
@@ -24,7 +27,8 @@ for bface = 1:size(bkgrid.bfaces,1)
     end
     reff = check_if_line_crosses_plane(analyzed_faces, ...
         left_fine_center_coord, right_fine_center_coord);
-    refv = any(ismember(element.faces(analyzed_volumes,:),analyzed_faces(reff)),2);
+    refv = any(ismember(element.faces(analyzed_volumes,:), ...
+                                       analyzed_faces(reff)),2);
     analyzed_volumes(analyzed_volumes) = refv;
     edges(:,bface) = edges(:,bface) | analyzed_volumes;
 end

@@ -17,7 +17,6 @@ if msconfig.create_bkgrid
             msconfig.create_bkgrid_visualization_folder);
     end
 end
-
 [F, fElem, bfaces, face_neighbours] = create_bkfaces(elem);
 element_center = findcentelem(coord, elem);
 face_center = findcentelem(coord, F);

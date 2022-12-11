@@ -1,12 +1,13 @@
 clear
 clc
 path(path,'bkgrid3d');
+path(path,'preprocessor');
 path(path,'tools');
-
 path(path,'debug');
 
 global vertex element face options sist fracture
 
+preconfig = create_preprocessor_config_structure();
 msconfig = create_multiscale_config_structure();
 
 for caso = 20
@@ -35,20 +36,26 @@ tipopeso = tp(interp,:);
 
 for slope = 2:2
     
-    if slope==1, querlim = 'sim'; else querlim = 'nao'; end
-    
-    opt = fopen('Options3D.txt','w'); 
-    fprintf(opt,'\n\n\n\n');
-    fprintf(opt,'%u\n\n\n',caso);
-    fprintf(opt,'%s\n\n\n',nomemalha);
-    fprintf(opt,'%s\n\n\n',tipopeso);
-    fprintf(opt,'%s\n\n\n','compexp');
-    fprintf(opt,'%s\n\n\n\n\n\n',querlim); 
-    fprintf(opt,'%s','Teste_1');
-    fclose(opt);
-    
+%     if slope==1, querlim = 'sim'; else querlim = 'nao'; end
+%     
+%     opt = fopen('Options3D.txt','w'); 
+%     fprintf(opt,'\n\n\n\n');
+%     fprintf(opt,'%u\n\n\n',caso);
+%     fprintf(opt,'%s\n\n\n',nomemalha);
+%     fprintf(opt,'%s\n\n\n',tipopeso);
+%     fprintf(opt,'%s\n\n\n','compexp');
+%     fprintf(opt,'%s\n\n\n\n\n\n',querlim); 
+%     fprintf(opt,'%s','Teste_1');
+%     fclose(opt);
+%     
+%% new preprocessor
     tic
-    [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
+    [vertex, element, face, wells] = mesh_processor(preconfig);
+    toc
+%%
+    debug_mesh_processor
+%%%
+    %[ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
   
 if msconfig.run_ms
     [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);

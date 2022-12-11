@@ -65,7 +65,6 @@ end
 % desabilitando fratura para comecar a codar
 options.fractarch = "nenhum"
 [ fracture ] = gerafrac3D(options);
-
 [ element, fracture, face ] = polygoninpolyhedron ( element, fracture, face, vertex, options );
 
 num_volumes = size(elem,1) + size(fracture.coord,1);
@@ -91,17 +90,14 @@ end
 function [coord,nnode,nflag] = getcoord(filepath)
 %Open the *.msh file
 readmsh = fopen(filepath);
-
 %"nnode" is the number of nodes in the discrete domain
 getmshdata = textscan(readmsh,'%u',1,'HeaderLines',4);
 %Attribute the data to "nnode"
 nnode = getmshdata{1};
-
 %"coord" is a matrix which contain the coordinate of each point of domain
 getmshdata = textscan(readmsh,'%*u %f64 %f64 %f64',nnode,'HeaderLines',1);
 %Fill the matrix "coord" with the x, y and z coordinates.
 coord = cell2mat(getmshdata);
-
 %Close the *.msh file
 fclose(readmsh);
 
@@ -111,7 +107,6 @@ nflag = 5000*ones(nnode,1);
 %FUNCTION "getelem"
 %--------------------------------------------------------------------------
 function [elem,bedgeref,nflag] = getelem(filepath,nnode,nflag)
-      
 %Open the *.msh file
 readmsh = fopen(filepath);        
 %"nent" is the number of all entities understud as element in *.msh file
