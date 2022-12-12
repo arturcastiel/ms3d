@@ -20,6 +20,6 @@ dcoarse = struct;
     dcoarse.sub_edges,dcoarse.sub_faces,dcoarse.sub_volumes, ...
     dcoarse.boundary_support, dcoarse.support_region] = ...
     create_dual_coarse_grid(bkgrid, pcoarse, msconfig);
-1
+
 
 end

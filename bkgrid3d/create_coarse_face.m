@@ -1,7 +1,7 @@
 function [coarse_faces] = create_coarse_face(bkgrid, elemloc)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
-global element face
+%create_coarse_face creates the coarse faces equivalents of the background
+% grid face.
+global face
 n = size(bkgrid.face_neighbours,1);
 inedge = [face.inner.montelem face.inner.juselem];
 bedge = face.bound.montelem;

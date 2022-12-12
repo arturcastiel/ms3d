@@ -1,8 +1,7 @@
 function [nodes,edges,faces,internals,sub_edges,sub_faces,sub_volumes,...
     boundary_support, support_region] =  create_dual_coarse_grid(...
     bkgrid, pcoarse, msconfig)
-%create_dual_coarse_grid Fuction that creates the elements of the dual
-%coarse mesh
+%create_dual_coarse_grid creates the elements of the dual coarse mesh
 [sub_edges] = create_sub_edges(bkgrid,pcoarse);
 [sub_faces] = create_sub_faces(bkgrid,pcoarse);
 [boundary_support] = create_boundary_support_region(bkgrid, sub_faces);

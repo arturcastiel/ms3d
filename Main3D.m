@@ -50,18 +50,16 @@ for slope = 2:2
 %     
 %% new preprocessor
     tic
-    [vertex, element, face, wells] = mesh_processor(preconfig);
+    [vertex, element, face, wells] = build_simulation(preconfig, msconfig);
     toc
 %%
-    debug_mesh_processor
+  debug_mesh_processor
 %%%
-    %[ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
-  
-if msconfig.run_ms
-    [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
-end
-   
+%  [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
+  1
 
+   
+1
 toc
 
      
