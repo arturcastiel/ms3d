@@ -49,32 +49,32 @@ for slope = 2:2
 %     fclose(opt);
 %     
 %% new preprocessor
-    tic
-    [vertex, element, face, wells] = build_simulation(preconfig, msconfig);
-    toc
-%%
-  debug_mesh_processor
-%%%
-%  [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
-  1
-
    
-1
+    %[vertex, element, face, wells] = build_simulation(preconfig, msconfig);
+   %%
+  %debug_mesh_processor
+%%%
+tic
+[ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
 toc
+if msconfig.run_ms
+    [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
+end
+1
 
-     
-     %calculo das transm TPFA, calculo do GV e ASSMBY
-    [ Keq, GV ] = complementaprep3D;
-
-    pesos3D( Keq, GV );
-
-    p = solver3D( wells, Keq, GV );
-
-    [ q, influx, bflux, G, NG ] = flowbalance3D( p, Keq, GV );
-
-    [ eL2, gradL2 ] = Erro3D( p, G, NG );
-
-    postprocessor3D( p, 'Output',1 );
+%      
+%      %calculo das transm TPFA, calculo do GV e ASSMBY
+%     [ Keq, GV ] = complementaprep3D;
+% 
+%     pesos3D( Keq, GV );
+% 
+%     p = solver3D( wells, Keq, GV );
+% 
+%     [ q, influx, bflux, G, NG ] = flowbalance3D( p, Keq, GV );
+% 
+%     [ eL2, gradL2 ] = Erro3D( p, G, NG );
+% 
+%     postprocessor3D( p, 'Output',1 );
     
 end
 

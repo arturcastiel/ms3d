@@ -13,13 +13,10 @@ bkgrid = struct;
 pcoarse = struct;
 [pcoarse.elemloc,pcoarse.centers,pcoarse.faces,pcoarse.face_centers] = ...
     create_primal_coarse_entities(bkgrid, msconfig);
-
 %% creating bkdual grid
 dcoarse = struct;
 [dcoarse.nodes, dcoarse.edges, dcoarse.faces, dcoarse.internals,...
     dcoarse.sub_edges,dcoarse.sub_faces,dcoarse.sub_volumes, ...
     dcoarse.boundary_support, dcoarse.support_region] = ...
     create_dual_coarse_grid(bkgrid, pcoarse, msconfig);
-
-
 end

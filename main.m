@@ -10,4 +10,5 @@ preconfig = create_preprocessor_config_structure();
 msconfig = create_multiscale_config_structure();
 
 %% creating the simulation
+
 [vertex, element, face, wells] = build_simulation(preconfig, msconfig);
