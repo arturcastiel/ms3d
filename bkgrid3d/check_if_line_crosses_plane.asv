@@ -37,9 +37,18 @@ vecline = p_right - p_left;
 p_intersect = point_plane_intersection(p_left, vecline, face_center,  ...
                                        face_normal);
 ref = check_if_point_in_middle_semi_line(p_intersect, p_left, p_right);
+m_ref = ...
+   bound_box([p1(ref,:); p2(ref,:); p3(ref,:)], [p_left;p_right],10^-2);
+m_ref = any(reshape(m_ref,3,,2);
+
 lref = check_point_in_triang(p_intersect(ref,:), p1(ref,:),p2(ref,:), ...
                                                p3(ref,:) , face_area(ref));
 ref(ref) = lref;
+%& ...
+ %       check_if_point_in_middle_semi_line(p_intersect, p_left, p_right);
+% ref = check_point_in_triang(p_intersect, p1,p2,p3, face_area) & ...
+%         check_if_point_in_middle_semi_line(p_intersect, p_left, p_right);
+
 end
 
 function[ref] = check_if_point_in_middle_semi_line(p_check, p1, p2)
@@ -55,13 +64,9 @@ ref = abs(R) <= tol;
 end
 function [ref] = check_point_in_triang(pa, p1,p2,p3, Atotal)
 tol = 10^-10;
-A1 = calc_area_triang_using_coords(pa,p1,p2);
-A2 = calc_area_triang_using_coords(pa,p2,p3);
-A3 = calc_area_triang_using_coords(pa,p1,p3);
-% A1 = calc_area_triang(pa,p1,p2);
-% A2 = calc_area_triang(pa,p2,p3);
-% A3 = calc_area_triang(pa,p1,p3);
-
+A1 = calc_area_triang(pa,p1,p2);
+A2 = calc_area_triang(pa,p2,p3);
+A3 = calc_area_triang(pa,p1,p3);
 %Atotal = calc_area_triang(p1,p2,p3);
 Apartial = A1+A2+A3;
 ref = abs(Atotal-Apartial) <= tol;

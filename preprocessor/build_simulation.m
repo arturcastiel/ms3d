@@ -9,12 +9,13 @@ tic
 % montelem and just element for the sake of testing. TO BE REMOVED!
 debug_mesh_processor
 %%
-toc
 bkgrid = 0;
 pcoarse = 0;
 dcoarse = 0;
 if msconfig.run_ms
     [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
 end
+toc
+
 wells = 0;
 end

@@ -1,7 +1,7 @@
 function [elemloc] = ensure_cover(elemloc)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-global vertex element face
+global face
 npar = max(elemloc);
 inedge = [face.inner.juselem face.inner.montelem];
 while sum(elemloc == 0) ~= 0
