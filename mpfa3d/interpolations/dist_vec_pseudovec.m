@@ -9,4 +9,5 @@ for index = 1:size(nodes_around_elem,2)
     dist = vecnorm((node_coord - local_elem_centroid),2,2);
     inv_dist(:,index) = (1./ dist);
 end
+    inv_dist = sum(inv_dist,2).\inv_dist;
 end

@@ -1,0 +1,23 @@
+function write_vtk(properties, prop_names, prop_type, isvec, ...
+    folderpath, fname, varargin)
+global element face vertex
+if ~isvec
+    if prop_type == 1
+        1+1
+    elseif prop_type == 3
+        1+1
+    elseif prop_type == 4
+        write_vtk_tetrahedral_volumes_vectors(properties, prop_names, ...
+            element.centroid(:,1:3) ],vnames,folderpath,fname, ...
+            vertex.coord, element.vertices,1);
+
+    end
+else
+    if prop_type == 1
+        1+1
+    elseif prop_type == 3
+    1+1
+    elseif prop_type == 4
+    1
+    end 
+end
