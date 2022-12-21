@@ -54,6 +54,9 @@ else
     face.bound.centroid = findcentelem(vertex.coord, face.bound.vertices);
     face.inner.centroid = findcentelem(vertex.coord, face.inner.vertices);
 
+    face.bound.area = vecnorm(face.bound.normal,2,2);
+    face.inner.area = vecnorm(face.inner.normal,2,2);
+
     save(sprintf('%s\\vertex',folderpath),'vertex');
     save(sprintf('%s\\element',folderpath),'element');
     save(sprintf('%s\\face',folderpath),'face');

@@ -23,13 +23,15 @@ if face.bound.flag(i)<200
     pJ = options.solanalit{reg4}(J(1),J(2),J(3));
     pK = options.solanalit{reg4}(K(1),K(2),K(3));   
     
-    hL = abs(dot(LJ,N)/norm(N)); KnL = (N'*KkL*N)/(norm(N)^2);
-    KTJIL = (N'*KkL*TJI)/(norm(N)^2); KTJKL = (N'*KkL*TJK)/(norm(N)^2);
+    hL = abs(dot(LJ,N)/norm(N)); 
+    KnL = (N'*KkL*N)/(norm(N)^2);
+    KTJIL = (N'*KkL*TJI)/(norm(N)^2);
+    KTJKL = (N'*KkL*TJK)/(norm(N)^2);
 
-    sist.Btpfa(nL) = sist.Btpfa(nL) - ((1/(2*hL*norm(N)))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
-                                      (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
+    %sist.Btpfa(nL) = sist.Btpfa(nL) - ((1/(2*hL*norm(N)))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
+   %                                   (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
 
-    sist.Mtpfa(nL,nL) = sist.Mtpfa(nL,nL) + (1/(hL*norm(N)))*((norm(N)^2)*KnL);
+   %sist.Mtpfa(nL,nL) = sist.Mtpfa(nL,nL) + (1/(hL*norm(N)))*((norm(N)^2)*KnL);
 
 elseif face.bound.flag(i)>200
     

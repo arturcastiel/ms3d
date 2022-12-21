@@ -1,9 +1,9 @@
-function [elem,coord] = generate_base_bkcoarsegrid(divx,divy,divz)
+function [elem,coord] = generate_base_bkcoarsegrid(divx,divy,divz,mesh)
 % generate_base_bkcoarsegrid: Function creates an automatic structured 
 %   bkgrid without the need of a mesh file.
 % Detailed explanation goes here
-global vertex
-auxvec = max(vertex.coord) - min(vertex.coord);
+
+auxvec = max(mesh.vertex.coord) - min(mesh.vertex.coord);
 lenx = auxvec(1);
 leny = auxvec(2);
 lenz = auxvec(3);

@@ -1,8 +1,7 @@
-function [sub_faces] = create_sub_faces(bkgrid, pcoarse)
+function [sub_faces] = create_sub_faces(bkgrid, pcoarse, mesh)
 %create_dual_faces Function that creates the sub_faces of the dual coarse
 %grid
 sub_faces = false(size(pcoarse.elemloc,1),size(bkgrid.edges,1));
-global element vertex
 %% creating the sub_faces
 for index_edge = 1:size(bkgrid.edges,1)
     edge_center = bkgrid.edge_centers(index_edge,:);
@@ -23,11 +22,11 @@ for index_edge = 1:size(bkgrid.edges,1)
         plane_center = mean(plane);
         %%
         ref_elem = plane_boundbox(plane, plane_normal, plane_center, ...
-            element.centroid(mref,:));
+            mesh.element.centroid(mref,:));
         mref(mref) = ref_elem;        
-        fsvol_adj = element.vertices(mref,:);
+        fsvol_adj = mesh.element.vertices(mref,:);
         list_local_nodes = setdiff(unique(fsvol_adj),0);
-        local_coords = vertex.coord(list_local_nodes,:);
+        local_coords = mesh.vertex.coord(list_local_nodes,:);
         node_analyzes = zeros(max(list_local_nodes),1);
         node_analyzes(list_local_nodes) = 1;
         [nodes_ref] = is_split_by_plane(local_coords, plane_normal , ...
@@ -42,7 +41,7 @@ for index_edge = 1:size(bkgrid.edges,1)
     end    
 end
 %integrity test on sub_faces
-[sub_faces] = integrity_face(sub_faces);
+[sub_faces] = integrity_face(sub_faces, mesh);
 end
 
 

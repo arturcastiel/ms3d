@@ -1,6 +1,6 @@
 function [coord, elem, F, fElem, bfaces, element_center, face_center, ...
     face_neighbours, normals, edges_adj, face_edges, elem_edges, ...
-    edge_centers] = create_bkgrid(msconfig)
+    edge_centers] = create_bkgrid(msconfig,mesh)
 % Function that create the structure with the elements of the background 
 % grid. It uses the configuration parameter from the msconfig struct.
 if msconfig.read_msh_file
@@ -10,7 +10,7 @@ end
 if msconfig.create_bkgrid
     coarse_vec = msconfig.coarsening;
     [elem,coord] = generate_base_bkcoarsegrid(coarse_vec(1), ...
-        coarse_vec(2),coarse_vec(3));
+        coarse_vec(2),coarse_vec(3), mesh);
     if msconfig.create_bkgrid_visualization
         create_bkgrid_msh_file(coord,elem, ...
             msconfig.create_bkgrid_visualization_name, ...

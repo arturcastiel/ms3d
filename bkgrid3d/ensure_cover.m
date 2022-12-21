@@ -1,9 +1,8 @@
-function [elemloc] = ensure_cover(elemloc)
+function [elemloc] = ensure_cover(elemloc, mesh)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-global face
 npar = max(elemloc);
-inedge = [face.inner.juselem face.inner.montelem];
+inedge = [mesh.face.inner.upstream mesh.face.inner.downstream];
 while sum(elemloc == 0) ~= 0
     for ii = 1:npar
         ref1 = (elemloc(inedge(:,1)) == ii) & (elemloc(inedge(:,2)) == 0);

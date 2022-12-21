@@ -9,7 +9,6 @@ w = zeros(size(vertex.elsurvertex)); a = zeros(size(vertex.coord,1),1);
 for i=1:size(vertex.elsurvertpointer,2)
     
     if vertex.flag(i)>200
-    
         if i==size(vertex.elsurvertpointer,2)
             posvelem = vertex.elsurvertpointer(i):size(vertex.elsurvertex,2);
         else
@@ -44,8 +43,9 @@ for i=1:size(vertex.elsurvertpointer,2)
 end
 
 vertex.weights = w; vertex.flowcontribs = a;
-
+1
 end
+
 %-------------------------------------------------------------------------%
 %-------------------------------------------------------------------------%
 

@@ -1,7 +1,6 @@
 function [semi_plane] = ...
     is_split_by_plane(list_coord, normal, fcenter)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%   Returns 1
 % 1 to points in one semiplane
 % 2 to points in the other semiplane
 n = size(list_coord,1);

@@ -1,7 +1,6 @@
-function [ref] = check_if_line_crosses_plane(list_faces, p_left,p_right)
+function [ref] = check_if_line_crosses_plane(list_faces, p_left,p_right, face, vertex)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
-global face vertex
 num_inner_faces = size(face.inner.centroid,1);
 ref_bfaces = list_faces > num_inner_faces;
 face_center = zeros(size(list_faces,1),3);

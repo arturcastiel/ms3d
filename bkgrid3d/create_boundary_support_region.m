@@ -1,11 +1,6 @@
 function [boundary_support] = create_boundary_support_region ...
-    (bkgrid, sub_faces)
-%UNTITLED18 Summary of this function goes here
-%   Detailed explanation goes here
-global element
-boundary_support = false(size(element.volume,1), size(bkgrid.elem,1));
-%% creating boundaries of the support region of excluding the boundary that
-% connect to the boundaries of the domain
+    (bkgrid, mesh, sub_faces)
+boundary_support = false(size(mesh.element.volume,1), size(bkgrid.elem,1));
 for vol = 1:size(bkgrid.elem,1)
     list_nodes = bkgrid.elem(vol,:);
     list_nodes = list_nodes(list_nodes ~=0 );

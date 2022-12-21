@@ -6,6 +6,7 @@ path(path,'tools');
 path(path,'debug');
 
 global vertex element face options sist fracture
+flagstruct = create_flags_and_bc_structure();
 
 preconfig = create_preprocessor_config_structure();
 msconfig = create_multiscale_config_structure();
@@ -52,21 +53,35 @@ for slope = 2:2
    
     %[vertex, element, face, wells] = build_simulation(preconfig, msconfig);
    %%
-  %debug_mesh_processor
 %%%
 tic
 [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
-toc
-if msconfig.run_ms
-    [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
-end
-1
+  debug_mesh_processor
+
+% toc
+% if msconfig.run_ms
+%     [bkgrid, pcoarse, dcoarse] = create_msentities(msconfig);
+% end
+% 1
 
 %      
 %      %calculo das transm TPFA, calculo do GV e ASSMBY
 %     [ Keq, GV ] = complementaprep3D;
-% 
-%     pesos3D( Keq, GV );
+
+[inner_k_left, inner_k_right, inner_h_left, inner_h_right] = ...
+   calc_inner_face_project_permeability(vertex, face, element, flagstruct);
+[inner_k_eq] = find_eqv_perm(inner_k_left, inner_k_right, inner_h_left, ...
+    inner_h_right, face.inner.area);
+[bound_k_eq, bound_h_left] = calc_bound_face_project_permeability...
+                                    (vertex, face, element, flagstruct);
+GV = calc_inner_gvp(vertex, face, element,inner_k_left, inner_k_right, ...
+    inner_h_left,inner_h_right,flagstruct); 
+
+Keq = inner_k_left;
+%GV = 0;
+[Keq, inner_h_left, inner_h_right] = ...
+   calc_inner_face_project_permeability(vertex, face, element, flagstruct);
+     pesos3D( Keq, GV );
 % 
 %     p = solver3D( wells, Keq, GV );
 % 
