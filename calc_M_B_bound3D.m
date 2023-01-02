@@ -16,7 +16,9 @@ if face.bound.flag(i)<200
     reg4 = element.region(nL); KkL = options.tensor{reg4}(L(1),L(2),L(3));
 
     JI = I - J; JK = K - J; LJ = J - L;
-    N = face.bound.normal(i,:)'; TJI = cross(N,JI); TJK = cross(N,JK);
+    N = face.bound.normal(i,:)'; 
+    TJI = cross(N,JI); 
+    TJK = cross(N,JK);
 
     reg4 = face.bound.flag(i) - 100;
     pI = options.solanalit{reg4}(I(1),I(2),I(3));
@@ -31,6 +33,10 @@ if face.bound.flag(i)<200
     %sist.Btpfa(nL) = sist.Btpfa(nL) - ((1/(2*hL*norm(N)))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
    %                                   (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
 
+
+   B =  ((1/(2*hL*A))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
+     (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
+   k = (1/(hL*A))*((A^2)*KnL);
    %sist.Mtpfa(nL,nL) = sist.Mtpfa(nL,nL) + (1/(hL*norm(N)))*((norm(N)^2)*KnL);
 
 elseif face.bound.flag(i)>200

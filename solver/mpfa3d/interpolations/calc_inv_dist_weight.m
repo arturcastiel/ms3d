@@ -1,0 +1,6 @@
+function [inv_dist] = calc_inv_dist_weight(mesh)
+inv_dist = mapped_jagged_array(mesh.vertex.node_elem_adj', ...
+    @dist_vec_pseudovec_transpose, mesh.vertex.coord, ...
+    mesh.element.centroid)';
+inv_dist = sum(inv_dist,2) .* inv_dist;
+end
