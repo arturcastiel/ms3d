@@ -6,7 +6,7 @@ addingfolders=dir(base_folder);
 for folderid=3:size(addingfolders,1)
     local_path = fullfile(base_folder,addingfolders(folderid).name);
     if isfolder(local_path)
-        addpath(local_path)
+        addpath(genpath(local_path))
     end
   %addpath(fullfile(base_folder,addingfolders(folderid).name));
 end

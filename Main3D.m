@@ -66,7 +66,7 @@ tic
 
 %      
 %      %calculo das transm TPFA, calculo do GV e ASSMBY
-%     [ Keq, GV ] = complementaprep3D;
+     [ Keq, GV ] = complementaprep3D;
 
 [inner_k_left, inner_k_right, inner_h_left, inner_h_right] = ...
    calc_inner_face_project_permeability(vertex, face, element, flagstruct);
