@@ -1,0 +1,7 @@
+function [out] = create_face_transmissibility_matrix(mesh)
+%UNTITLED4 Summary of this function goes here
+%   Detailed explanation goes here
+[face_trans_tpfa] = create_tpfa_face_trans_matrix(mesh);
+[face_trans_cdt] = create_cdt_face_trans_matrix(mesh); 
+out = 1;
+end

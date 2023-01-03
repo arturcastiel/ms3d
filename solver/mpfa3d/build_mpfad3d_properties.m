@@ -24,6 +24,6 @@ mpfad.inner.gv = inner_gv;
 mpfad.bound.t_eq = (mesh.face.bound.area.* bound_k_eq)./bound_h_left;
 mpfad.bound.h_left = bound_h_left;
 mpfad.bound.gv = bound_gv;
-mpfad.weights = calc_nodes_interpolation_weights(mesh, preconfig);
+mpfad.vertex.weights = calc_nodes_interpolation_weights(mesh, preconfig);
 [mpfad.p_dir, mpfad.p_dir_ref] = create_dirichlet_pressures_mpfad(mesh);
 end
