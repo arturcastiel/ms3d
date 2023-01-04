@@ -1,6 +1,6 @@
 function [p_dir, ref] = create_dirichlet_pressures_mpfad(mesh)
 % creates a vector containing the node based dirichlet bondaries
-% condiotions
+% conditions
 p_dir = sparse(size(mesh.vertex.coord,1),1);
 ref = ismember(mesh.vertex.flag, ...
             mesh.physical_properties.flag_value_dirichlet(:,1));

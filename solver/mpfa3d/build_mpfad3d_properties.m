@@ -26,4 +26,6 @@ mpfad.bound.h_left = bound_h_left;
 mpfad.bound.gv = bound_gv;
 mpfad.vertex.weights = calc_nodes_interpolation_weights(mesh, preconfig);
 [mpfad.p_dir, mpfad.p_dir_ref] = create_dirichlet_pressures_mpfad(mesh);
+%removing weights of the p node dirichlet boundaries
+mpfad.vertex.weights(mpfad.p_dir_ref,:) = 0;
 end

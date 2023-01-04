@@ -111,6 +111,9 @@ venv.bak/
 # Visualization Files
 *.vtk
 
+# MATLAB saved  variables
+*.mat
+
 # Cython Files
 *.pyc
 

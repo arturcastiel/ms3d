@@ -24,7 +24,7 @@ nomemalha = sprintf('2halfhollowcube_4.msh');
 nomemalha = sprintf('benchtetra_.msh');
 %nomemalha = sprintf('cube_tet.msh');
 
-nomemalha = sprintf('benchtetra_8.msh');
+nomemalha = sprintf('benchtetra_1.msh');
 % nomemalha = sprintf('2halfhollowcube_%u.msh',malha);
 % nomemalha = sprintf('oblique-fracture_%u.msh',i);
 
@@ -56,7 +56,7 @@ for slope = 2:2
 %%%
 tic
 [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
-  debug_mesh_processor
+  %debug_mesh_processor
 
 % toc
 % if msconfig.run_ms
@@ -67,23 +67,24 @@ tic
 %      
 %      %calculo das transm TPFA, calculo do GV e ASSMBY
      [ Keq, GV ] = complementaprep3D;
+% 
+% [inner_k_left, inner_k_right, inner_h_left, inner_h_right] = ...
+%    calc_inner_face_project_permeability(vertex, face, element, flagstruct);
+% [inner_k_eq] = find_eqv_perm(inner_k_left, inner_k_right, inner_h_left, ...
+%     inner_h_right, face.inner.area);
+% [bound_k_eq, bound_h_left] = calc_bound_face_project_permeability...
+%                                     (vertex, face, element, flagstruct);
+% GV = calc_inner_gvp(vertex, face, element,inner_k_left, inner_k_right, ...
+%     inner_h_left,inner_h_right,flagstruct); 
 
-[inner_k_left, inner_k_right, inner_h_left, inner_h_right] = ...
-   calc_inner_face_project_permeability(vertex, face, element, flagstruct);
-[inner_k_eq] = find_eqv_perm(inner_k_left, inner_k_right, inner_h_left, ...
-    inner_h_right, face.inner.area);
-[bound_k_eq, bound_h_left] = calc_bound_face_project_permeability...
-                                    (vertex, face, element, flagstruct);
-GV = calc_inner_gvp(vertex, face, element,inner_k_left, inner_k_right, ...
-    inner_h_left,inner_h_right,flagstruct); 
-
-Keq = inner_k_left;
+%Keq = inner_k_left;
 %GV = 0;
-[Keq, inner_h_left, inner_h_right] = ...
-   calc_inner_face_project_permeability(vertex, face, element, flagstruct);
+% [Keq, inner_h_left, inner_h_right] = ...
+%    calc_inner_face_project_permeability(vertex, face, element, flagstruct);
      pesos3D( Keq, GV );
 % 
-%     p = solver3D( wells, Keq, GV );
+     p = solver3D( wells, Keq, GV );
+     1
 % 
 %     [ q, influx, bflux, G, NG ] = flowbalance3D( p, Keq, GV );
 % 

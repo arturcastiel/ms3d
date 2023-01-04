@@ -9,5 +9,7 @@ function [mesh,msmesh] = build_simulation_meshes(preconfig,msconfig)
 if preconfig.run_ms
     [msmesh.bkgrid, msmesh.pcoarse, msmesh.dcoarse] = ...
         create_msentities(msconfig, mesh);
+else
+    msmesh = 0;
 end
 end

@@ -34,10 +34,10 @@ Keq(i,1) = ((KnR*KnL)/(KnR*hL+KnL*hR))*norm(N);
 %G=0.5*(-DJK*(pJ-pI)+DJI*(pJ-pK)); --------------------------------------%
 GI = 0.5*DJK; GJ = 0.5*DJI-0.5*DJK; GK = -0.5*DJI; GV(i,:)=[GI GJ GK];
 % 
-% sist.Mtpfa(nL,nL) = sist.Mtpfa(nL,nL) + Keq(i);
-% sist.Mtpfa(nL,nR) = sist.Mtpfa(nL,nR) - Keq(i);
-% sist.Mtpfa(nR,nR) = sist.Mtpfa(nR,nR) + Keq(i);
-% sist.Mtpfa(nR,nL) = sist.Mtpfa(nR,nL) - Keq(i);
+sist.Mtpfa(nL,nL) = sist.Mtpfa(nL,nL) + Keq(i);
+sist.Mtpfa(nL,nR) = sist.Mtpfa(nL,nR) - Keq(i);
+sist.Mtpfa(nR,nR) = sist.Mtpfa(nR,nR) + Keq(i);
+sist.Mtpfa(nR,nL) = sist.Mtpfa(nR,nL) - Keq(i);
 
 end
 

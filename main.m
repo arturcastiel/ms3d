@@ -20,8 +20,10 @@ global options
 %% defining the intialization parameters of the simulation
 preconfig = create_preprocessor_config_structure();
 msconfig = create_multiscale_config_structure();
-%% create diary
-create_diary(preconfig);
+%% create diary - diary needs to log only disp to avoid logs becoming too
+% big
+% needs 
+%create_diary(preconfig);
 %% creating the simulation
 [mesh, multiscale_mesh] = build_simulation(preconfig, msconfig);
 %% r

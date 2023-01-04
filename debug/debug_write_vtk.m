@@ -23,7 +23,7 @@ write_vtk_tetrahedral_faces(prop,vnames,folderpath,fname, vertex.coord, ...
 
 %% testing volumes
 
-vnames = ["velocity", "test", "artur"];
+vnames = ["pressure"];
 folderpath = pwd;
 fname = "debug_face_vtk";
 prop = [vertex.coord];

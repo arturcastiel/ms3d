@@ -5,7 +5,7 @@ switch flagstruct.benchmark_case
     % linear
     case 1
         f = @(x,y,z) x;
-        K = @(x,y,z) [1 0 0;0 1 0;0 0 1];
+        K = {@(x,y,z) [1 0 0 0 1 0 0 0 1]};
     case 2
         % quadratic
         f = @(x,y,z) y^2;
