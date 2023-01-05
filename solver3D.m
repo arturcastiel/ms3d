@@ -2,7 +2,8 @@ function p = solver3D( wells, Keq, GV )
 %
 global sist element options
 
-s = determinasource; element.sourceterm = s;
+s = determinasource(); 
+element.sourceterm = s;
 
 sist.Btpfa = sist.Btpfa + s;
 

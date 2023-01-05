@@ -25,7 +25,20 @@ mpfad.bound.t_eq = (mesh.face.bound.area.* bound_k_eq)./bound_h_left;
 mpfad.bound.h_left = bound_h_left;
 mpfad.bound.gv = bound_gv;
 mpfad.vertex.weights = calc_nodes_interpolation_weights(mesh, preconfig);
+if mesh.physical_properties.benchmark_case == 1
+    debug_pesos_mpfad
+else
+    error("ERROR: Debug routine not defined for this case.")
+end
 [mpfad.p_dir, mpfad.p_dir_ref] = create_dirichlet_pressures_mpfad(mesh);
+%%
+%nodes = unique(mesh.face.bound.vertices);
+ref = mesh.vertex.flag ~= 0;
+%f = @(x,y,z) x;
+%p = mesh.vertex.coord(ref,1);
+mpfad.p_dir(ref) = mesh.vertex.coord(ref,1);
+1
+%
 %removing weights of the p node dirichlet boundaries
 mpfad.vertex.weights(mpfad.p_dir_ref,:) = 0;
 end

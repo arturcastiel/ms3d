@@ -57,6 +57,7 @@ for slope = 2:2
 tic
 [ vertex, element, face, options, sist, fracture, wells ] = preprocessor3D;
   %debug_mesh_processor
+  1
 
 % toc
 % if msconfig.run_ms
