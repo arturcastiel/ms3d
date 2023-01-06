@@ -10,7 +10,7 @@ preconfig.pressure_discretization = 2;
 % 2 - Variation of Inverse Distance
 preconfig.interpolaton_type = 1;
 preconfig.read_wells = true;
-preconfig.mesh_file = "benchtetra_3.msh";
+preconfig.mesh_file = "benchtetra_1.msh";
 preconfig.mesh_folder = "Malhas";
 preconfig.run_fracture_simulation = "true";
 preconfig.fracture_network_file = "fracture.txt";
