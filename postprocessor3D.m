@@ -1,8 +1,8 @@
-function postprocessor3D( p,name, idxvpi, mesh )
+function postprocessor3D( p,name, idxvpi )
 % Create a vtk file for solution visualization ---------------------------% 
-global options fracture
-element = mesh.element;
-vertex = mesh.vertex;
+global options fracture element vertex
+%element = mesh.element;
+%vertex = mesh.vertex;
 %--------------------------------------------------------------------------
 fname = name; ext = '.vtk';
 

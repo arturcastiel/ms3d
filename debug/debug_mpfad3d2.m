@@ -5,17 +5,20 @@ mcdt = summation*face_trans_cdt;
 M = mcdt + mtpfa;
 Bcdt = summation*(face_source_cdt);
 Btpfa = summation*(face_source_tpfa);
-p_artur = M\aB;
-
+%B = Bcdt + Btpfa;
+load tulio
+mcdt2 = tulio.Mcdt;
+mtpfa2 = tulio.Mtpfa;
+Btpfa2 = tulio.Btpfa;
+Bcdt2 = tulio.Btpfa;
 
 
 %p1 = M\B;
-aBcdt = summation*(face_source_cdt);
-aBtpfa = summation*(face_source_tpfa);
-aB = aBcdt + aBtpfa;
-p_artur = (M\aB);
-analyze = full([Btpfa aBtpfa abs(Btpfa - aBtpfa)]);
-analyze2 = full([Bcdt aBcdt abs(Bcdt - aBcdt)]);
+Bcdt = summation*(face_source_cdt);
+Btpfa = summation*(face_source_tpfa);
+aB = Bcdt + Btpfa;
+analyze = full([Btpfa Btpfa2 abs(Btpfa - Btpfa2)]);
+analyze2 = full([Bcdt Bcdt2 abs(Bcdt - Bcdt2)]);
 % 
 % M(:) = 0;
 % mesh
@@ -57,5 +60,5 @@ write_vtk(error_el,"error", 3, false, pwd, "git_error", mesh,1)
 p1 = (mcdt2+mtpfa2)\B ;
 p2 = (mcdt+mtpfa)\aB ;
 
-write_vtk([p_artur p_artur],["pressure-tulio" "pressure-artur"], 3, false, pwd, "git_pressure", mesh,1)
+write_vtk([p1 p2],["pressure-tulio" "pressure-artur"], 3, false, pwd, "git_pressure", mesh,1)
 1

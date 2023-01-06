@@ -32,7 +32,8 @@ if face.bound.flag(i)<200
 
     sist.Btpfa(nL) = sist.Btpfa(nL) - ((1/(2*hL*norm(N)))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
                                       (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
-
+% qq =  - ((1/(2*hL*norm(N)))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
+%                                       (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));
 
    %B =  ((1/(2*hL*A))*((dot(-TJK,LJ)*KnL+hL*norm(N)*KTJKL)*...
  %    (pI-pJ)-2*(norm(N)^2)*KnL*pJ+(dot(-TJI,LJ)*KnL+hL*norm(N)*KTJIL)*(pJ-pK)));

@@ -19,6 +19,7 @@ for i=1:size(vertex.elsurvertpointer,2)
         if sum(W)~=0
             a(i) = sum(A)/sum(W); W = W/sum(W); w(posvelem) = W;
         end
+        
         clear velem W A
         [ sist.Mcdt, sist.Bcdt ] = contribuvertex3D( sist.Mcdt, sist.Bcdt, Keq, GV, w, a, i );
     

@@ -7,7 +7,7 @@ length = len_bedge + len_inedge;
 auxmat1 = [mesh.face.inner.upstream [1:len_inedge]' ones(len_inedge,1)];
 auxmat2 = [mesh.face.inner.downstream [1:len_inedge]' -ones(len_inedge,1)];
 auxmat3 = [mesh.face.bound.upstream ([1:len_bedge]' + len_inedge) ...
-                                                       ones(len_bedge,1)];
+                                                       1*ones(len_bedge,1)];
 auxmat = [auxmat1; auxmat2; auxmat3];
 summation = sparse(auxmat(:,1), auxmat(:,2) ,auxmat(:,3), ...
                                 size(mesh.element.centroid,1), length);

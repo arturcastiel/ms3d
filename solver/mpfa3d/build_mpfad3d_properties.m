@@ -37,6 +37,7 @@ ref = mesh.vertex.flag ~= 0;
 %f = @(x,y,z) x;
 %p = mesh.vertex.coord(ref,1);
 mpfad.p_dir(ref) = mesh.vertex.coord(ref,1);
+write_vtk(mpfad.p_dir ,"flags", 0, false, pwd, "vtk_p", mesh,1)
 1
 %
 %removing weights of the p node dirichlet boundaries
