@@ -14,7 +14,7 @@ transm = K.*GV;
 transm2 = transm;
 transm2(~aux_face_p_gev_ref) = 0;
 face_source_cdt = sum(transm2 .*p_gv,2);
-1
+
 transm(aux_face_p_gev_ref) = 0;
 face_node_transm = ...
         sparse(repmat(count_faces,3,1),reshape(aux_face_adj,[],1), ...
