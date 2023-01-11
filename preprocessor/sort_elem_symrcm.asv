@@ -1,0 +1,10 @@
+function [out] = sort_elem_symrcm(elem)
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+ind = [1:size(elem,1)]';
+auxmat = [ind elem(:,1); ind elem(:,2); ind elem(:,3); ind elem(:,4)];
+qq = sparse(auxmat(:,1),auxmat(:,2), true);
+t= qq*qq'
+outputArg1 = inputArg1;
+outputArg2 = inputArg2;
+end

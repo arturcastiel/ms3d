@@ -1,0 +1,13 @@
+function [x,flyp2,rvyp2] = ssolver(A,b)
+xg = ones(size(b));
+tol = 10^-16;
+maxit = 6000;
+flyp2 = 0;
+rvyp2 = 0;
+% [P,R,C] = equilibrate(A);
+% B = R*P*A*C;
+% d = R*P*b;
+[L2,U2] = ilu(A,struct('type','ilutp','droptol',1e-1,'thresh',0));
+ %[x,flyp2,~,~,rvyp2] = gmres(A,b,[],tol,maxit,L2,U2,xg);
+x = bicgstab(A,b,tol,maxit);
+end

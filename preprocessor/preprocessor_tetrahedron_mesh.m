@@ -11,7 +11,7 @@ benchmark = struct;
 %% creating vertex and elements
 [vertex.coord,nnode] = getcoord(file_path);
 [element.vertices,element.region,boundary_flag_ref,vertex.flag ] = ...
-    getelem(file_path, nnode);
+    getelem(file_path, nnode, preconfig);
 [vertex.elsurvertex, vertex.elsurvertpointer, vertex.node_elem_adj] = ...
     find_elements_around_nodes(element.vertices);
 [element.volume] =  volume_tetrahedron(vertex.coord,element.vertices);
@@ -43,7 +43,6 @@ end
 %% creating the neumman bc for the element
 [flagstruct.element.source] = create_element_source_terms(element, ...
                                                             flagstruct);
-
 %% creating element faces adjacencies
 [element.faces, element.faces_bol] = create_elem_face_adj( ...
     face.inner.upstream, face.inner.downstream, face.bound.upstream);

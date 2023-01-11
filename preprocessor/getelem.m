@@ -1,4 +1,5 @@
-function [elem,elem_flag,bedgeref,nflag] = getelem(filepath,nnode)
+function [elem,elem_flag,bedgeref,nflag] = getelem(filepath, nnode, ...
+                                                                preconfig)
 %Open the *.msh file
 readmsh = fopen(filepath);
 nflag = zeros(nnode,1);
@@ -73,6 +74,10 @@ espnode = sum(entitype == 15);
 nflag(1:espnode) = auxmat(1:espnode,2);
 %Close the *.msh file
 fclose(readmsh);
+if preconfig.sort_symrcm
+    disp("Sorting mesh element using symrcm")
+    [elem,~] = sort_elem_symrcm(elem);
+end
 elem_flag = elem(:,end);
 elem = elem(:,1:4);
 end

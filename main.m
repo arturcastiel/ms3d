@@ -14,6 +14,7 @@ msconfig = create_multiscale_config_structure();
 % diary needs configuration
 %create_diary(preconfig);
 %% creating the simulation
+tic
 [mesh, multiscale_mesh] = build_simulation(preconfig, msconfig);
 %% simulation solver
 run_simulation(mesh)

@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+#big files
+benchtetra_10.msh
+benchtetra_9.msh
+
 #Profilings
 *.prof
 *.dat
