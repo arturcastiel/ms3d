@@ -85,6 +85,9 @@ tic
      pesos3D( Keq, GV );
 % 
      p = solver3D( wells, Keq, GV );
+     mesh.vertex = vertex;
+     mesh.elemement = element;
+     
      1
 % 
 %     [ q, influx, bflux, G, NG ] = flowbalance3D( p, Keq, GV );

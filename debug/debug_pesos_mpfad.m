@@ -15,7 +15,7 @@ ref2 = (mesh.vertex.coord(:,2) ==    0) | (mesh.vertex.coord(:,2) == 1);
 ref3 = (mesh.vertex.coord(:,3) == 0) | (mesh.vertex.coord(:,3) == 1);
 ref = ref1 | ref2 | ref3;
 mesh.vertex.flag(ref) = 101;
-write_vtk(mesh.vertex.flag ,"flags", 0, false, pwd, "vtk_flag", mesh,1)
+%write_vtk(mesh.vertex.flag ,"flags", 0, false, pwd, "vtk_flag", mesh,1)
 1
 %% debug tulio linear
 %nodes = unique(mesh.face.bound.vertices);

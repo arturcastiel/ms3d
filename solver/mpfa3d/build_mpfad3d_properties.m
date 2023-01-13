@@ -1,4 +1,4 @@
-function [mpfad] = build_mpfad3d_properties(mesh, preconfig)
+function [mpfad] = build_mpfad3d_properties(mesh,preconfig)
 % creating parameters used in the calculation of the MFPA-D 3D
 % transmissibility
 mpfad = struct;
@@ -33,12 +33,13 @@ end
 [mpfad.p_dir, mpfad.p_dir_ref] = create_dirichlet_pressures_mpfad(mesh);
 %%
 %nodes = unique(mesh.face.bound.vertices);
+%% code for testing purposes
+disp("Testing routine")
 ref = mesh.vertex.flag ~= 0;
 %f = @(x,y,z) x;
 %p = mesh.vertex.coord(ref,1);
 mpfad.p_dir(ref) = mesh.vertex.coord(ref,1);
-write_vtk(mpfad.p_dir ,"flags", 0, false, pwd, "vtk_p", mesh,1)
-1
+%write_vtk(mpfad.p_dir ,"flags", 0, false, pwd, "vtk_p", mesh,1)
 %
 %removing weights of the p node dirichlet boundaries
 mpfad.vertex.weights(mpfad.p_dir_ref,:) = 0;

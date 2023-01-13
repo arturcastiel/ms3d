@@ -5,6 +5,7 @@ __pycache__/
 
 #big files
 benchtetra_10.msh
+benchtetra_101.msh
 benchtetra_9.msh
 
 #Profilings
