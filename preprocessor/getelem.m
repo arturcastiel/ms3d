@@ -49,6 +49,7 @@ if nelem > 0
     elem(1:nelem,1:4) = elemaux(:,2:5); 
 end  %End of second IF
 
+
 for bi=1:size(bedgeref,1)
     vert = bedgeref(bi,1:3);
     nflag(vert) = bedgeref(bi,5);

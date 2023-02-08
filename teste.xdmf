@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<!DOCTYPE Xdmf SYSTEM "Xdmf.dtd" []>
+<Xdmf xmlns:xi="http://www.w3.org/2001/XInclude" Version="2.0">
+ <Domain>
+   <Grid Name="DARSim - Mesh" GridType="Uniform">
+     <Topology TopologyType="Tetrahedron" NumberOfElements="1472608">
+       <DataItem Format="HDF" Dimensions="1472608 4" NumberType="uint64">
+        mesh.h5:/elem
+       </DataItem>
+     </Topology>
+     <Geometry Type="XYZ">
+       <DataItem Format="HDF" Dimensions="267581 3" NumberType="Float" Precision="8">
+        mesh.h5:/coords
+       </DataItem>
+     </Geometry>
+<Attribute Name="mpfad" AttributeType="Scalar" Center="Cell">
+<DataItem Dimensions="1472608" NumberType="Float" Precision="8" Format="HDF">
+props.h5:/mpfad
+</DataItem>
+</Attribute>
+   </Grid>
+ </Domain>
+</Xdmf>

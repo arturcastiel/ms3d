@@ -3,7 +3,8 @@ clc
 %% adding folder to the main path
 path(path,'tools')
 required_folders = ["builder","bkgrid3d", "pseudo_vectorization_tools", ...
-    "preprocessor","debug", "mpfa3d", "postprocessing", "solver"];
+    "preprocessor","debug", "mpfa3d", "postprocessing", "solver", ... 
+    "solver/mpfa3d/interpolations" "plotf"];
 for folder = required_folders
     add_folder_and_sub_folder_to_path(folder)
 end

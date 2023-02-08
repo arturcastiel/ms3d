@@ -10,8 +10,17 @@ face = struct;
 benchmark = struct;
 %% creating vertex and elements
 [vertex.coord,nnode] = getcoord(file_path);
+%% outdated getelem version 
+% tic
+% [element.vertices,element.region,boundary_flag_ref,vertex.flag ] = ...
+%     getelem(file_path, nnode, preconfig);
+% toc
+%% improved getelem
+%tic
 [element.vertices,element.region,boundary_flag_ref,vertex.flag ] = ...
-    getelem(file_path, nnode, preconfig);
+   getelem_cell_based(file_path, nnode, preconfig);
+%toc
+%%
 [vertex.elsurvertex, vertex.elsurvertpointer, vertex.node_elem_adj] = ...
     find_elements_around_nodes(element.vertices);
 [element.volume] =  volume_tetrahedron(vertex.coord,element.vertices);

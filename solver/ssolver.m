@@ -4,7 +4,7 @@ if isempty(varargin)
 else
     xg = varargin{1};
 end
-tol = 1*10^-13;
+tol = 1*10^-12;
 maxit = 6000;
 flyp2 = 0;
 rvyp2 = 0;

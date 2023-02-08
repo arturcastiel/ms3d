@@ -10,7 +10,7 @@ GV =  [ solver.pressure_param.inner.gv;  ...
         temp];
 K =   [solver.pressure_param.inner.t_eq; ...
        solver.pressure_param.bound.t_eq];
-count_faces = [1:size(aux_face_adj,1)]';
+count_faces = uint32([1:size(aux_face_adj,1)]');
 transm = K.*GV;
 transm2 = transm;
 transm2(~aux_face_p_gev_ref) = 0;
