@@ -1,0 +1,177 @@
+-- DARSim2 INPUT file
+-- All keywords are in capital letters
+
+--Name
+TITLE
+	Case11_100mil
+
+--Size of the reservoir in m 
+DIMENSION
+ 	100
+	100
+	100
+	
+--Grid Discretization ("CartesianGrid" or "CornerPointGrid" or "Tetrahedral")
+--To include the CornerPointGrid or Tetrahedral input data, add the name of the input file in the line below the "CornerPointGrid" or "Tetrahedral" keyword.
+--To include the CornerPointGrid or Tetrahedral permeability/porosity input data, add the name of the input corresponding file in the line under the previous.
+GRID_DISCRETIZATION
+	TetrahedralGrid
+	Case11_1Frac_Tetra_100mil.msh
+
+--grid Nx//Ny//Nz
+SPECGRID
+	100
+	100
+	100
+	
+--Total time (in days and hours and minutes and seconds)
+TOTAL_TIME
+	750 DAYS 0 HOURS 0 MINUTES 0 SECONDS
+	
+--Permeability
+	--To specify unit (m2, D, mD), add "permeability_unit" keyword in capital letters. Default is m2)
+	--To specify scale (Linear or Logarithmic), add "permeability_scale" keyword in capital letters. Default is Linear. If the data is in log scale, use "logarithmic" keyword in capital letters.
+	--In case of using heterogenous input file, you can choose to permanently reduce the heterogenous contrast by using "contrast_reduction" in capital letters.
+	
+	PERMEABILITY_UNIT
+		m2
+	
+	PERMEABILITY_SCALE
+		Linear
+		
+	
+		PERMEABILITY_X
+			1e-14
+	
+		PERMEABILITY_Y
+			1e-14
+	
+		PERMEABILITY_Z
+			1e-14
+	
+	PERMEABILITY_CONTRAST_REDUCTION
+		--Set the mean for permeability ("Default" or a number. Unit follows what mentioned above or m2 by default.)
+		PERMEABILITY_CONTRAST_MEAN
+			10
+		--The maximum order of contrast in log10 (Default is 3)
+		PERMEABILITY_CONTRAST_ORDER
+			5
+	
+POROSITY
+	0.2 
+	
+GRAVITY
+	ON
+
+--Fluid/Rock Properties
+FLUID_DENSITY (kg/m^3)
+	1000
+	800
+	
+ROCK_DENSITY (kg/m^3)
+	2600
+
+FLUID_VISCOSITY (Pa.sec)
+	1e-3
+	1e-3
+
+FLUID_COMPRESSIBILITY (1/Pa)
+	0.4e-9
+	0.6e-9
+	
+ROCK_COMPRESSIBILITY (1/Pa)
+	0e-8
+	
+FLUID_HEAT_CONDUCTIVITY (W/m/K)
+	0.6
+	0.1
+	
+ROCK_HEAT_CONDUCTIVITY (W/m/K)
+	3.0
+	
+FLUID_SPECIFIC_HEAT (J/Kg/K)
+	4200
+	8000
+
+ROCK_SPECIFIC_HEAT (J/Kg/K)
+	850
+
+RELPERM (Linear,Quadratic,Corey,Foam)
+	Linear
+	--srw (wetting residual saturation)
+	0.0
+	--srnw (nonwetting residual saturation)
+	0.0
+	--Wetting kre [-]
+	1
+	--Nonwetting kre [-]
+	1
+	--Wetting n [-]
+	1
+	--Nonwetting n [-]
+	1
+	
+CAPILLARITY (Linear,JLeverett,BrooksCorey,Table)
+
+FLUID_MODEL (Immiscible,BlackOil,Compositional,Geothermal_SinglePhase, Geothermal_MultiPhase)
+	Immiscible
+	--Number of phases
+	2
+	--Number of components
+	2
+	
+--initial conditions ( Pressure(pa), Temperature(K), Enthalpy(J/Kg), Satuaration_1, Saturation_2, etc )
+INITIAL_PRESSURE
+	2e7
+INITIAL_TEMPERATURE
+	400
+INITIAL_ENTHALPY
+	nan
+INITIAL_SATURATION_1
+	0
+INITIAL_SATURATION_2
+	1
+
+--Wells
+WELL_START
+	TYPE ("Inj" or "Prod" in capital letters)
+		INJ
+	COORDINATE ("ijk" or "xyz" in capital letters)
+		XYZ_LIST
+		[ 10 , 90 , 100 ]
+		[ 10 , 90 , 100 ]
+	CONSTRAINT ("pressure" or "rate" in capital letters, Value (Pa - pv/day))
+		PRESSURE
+		3e7
+	FORMULA ("PI" or "radius" in capital letters, Value (m^3/day/pa - m))
+		WI
+		1000
+	BOUNDARY_CONDITION (Value (K))
+		TEMPERATURE
+		300
+WELL_END
+
+WELL_START
+	TYPE ("Inj" or "Prod" in capital letters)
+		PROD
+	COORDINATE ("ijk" or "xyz" in capital letters)
+		XYZ_LIST
+		[ 90 , 10 , 100 ]
+		[ 90 , 10 , 100 ]
+	CONSTRAINT ("pressure" or "rate" in capital letters, Value (Pa - pv/day))
+		PRESSURE
+		1e7
+	FORMULA ("PI" or "radius" in capital letters, Value (m^3/day/pa - m))
+		WI
+		1000
+	BOUNDARY_CONDITION (Value (K))
+		TEMPERATURE
+		300
+WELL_END
+
+--Keyword for fractures
+FRACTURED
+	ON
+	Fracture_Output_Canal_100mil.txt
+
+-- END OF DECK 
