@@ -1,4 +1,4 @@
-function [ OP] = generate_prolongation_msrst(msmesh, OP_init, TransFc, w, maxint )
+function [ OP] = generate_prolongation_msrst(mesh, msmesh, OP_init, TransFc, w, maxint )
 %genProlongationOperator Generates Prolongation Operator
 %   INPUT:
 %   mesh -> mesh structure
@@ -14,6 +14,9 @@ function [ OP] = generate_prolongation_msrst(msmesh, OP_init, TransFc, w, maxint
     %TransFc = full(TransFc);
     GlobalBoundary = msmesh.dcoarse.faces | msmesh.dcoarse.edges;
     outSupport  = ~msmesh.dcoarse.support_region;
+    %     rar = sum(msmesh.dcoarse.support_region,2) == 1;
+%     rar(GlobalBoundary) = 
+%     outSupport(,:) = true;
     %Dinv = sparse( diag(1./TransFc(1:size(TransFc,1)+1:end)));
     %Dinv = sparse( diag(bsxfun(@ldivide,spdiags(TransFc,0),1)) );
     Dinv =  spdiags(bsxfun(@ldivide,spdiags(TransFc,0),1),0,size(TransFc,1) ,size(TransFc,1) );

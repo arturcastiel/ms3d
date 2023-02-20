@@ -23,7 +23,7 @@ name = name{1};
 
 %% multiscale manipulation
 RO = generate_restriction(multiscale_mesh);
-PO = generate_prolongation_msrst(multiscale_mesh, RO', M, 2/3,300);
+PO = generate_prolongation_msrst(mesh, multiscale_mesh, RO', M, 2/3,300);
 opname = []
 for ii = 1:size(RO,1)
     nnmae = sprintf("OP-%d", ii);
