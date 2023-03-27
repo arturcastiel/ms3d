@@ -18,23 +18,23 @@ F = summation*face_source + mesh.physical_properties.element.source;
 flow = face_trans *p -  face_source;
 mass_balance = summation*flow + mesh.physical_properties.element.source;
 %tic;write_vtk([p],["mpfad"], 3, false, pwd, "pressure_artur", mesh,0);toc
-name = cellstr(preconfig.mesh_file);
-name = name{1};
-
-%% multiscale manipulation
-RO = generate_restriction(multiscale_mesh);
-PO = generate_prolongation_msrst(mesh, multiscale_mesh, RO', M, 2/3,300);
-opname = []
-for ii = 1:size(RO,1)
-    nnmae = sprintf("OP-%d", ii);
-    opname = [opname, nnmae];
-end
-write_vtk([RO'],opname, 3, false, pwd, "restriction", mesh, str2num(name(end-4)));
-write_vtk([PO],opname, 3, false, pwd, "prolongation", mesh, str2num(name(end-4)));
-
-
-toc
-write_vtk([p],["mpfad"], 3, false, pwd, "pressure_speed", mesh, str2num(name(end-4)));
+% name = cellstr(preconfig.mesh_file);
+% name = name{1};
+% 
+% %% multiscale manipulation
+% RO = generate_restriction(multiscale_mesh);
+% PO = generate_prolongation_msrst(mesh, multiscale_mesh, RO', M, 2/3,300);
+% opname = []
+% for ii = 1:size(RO,1)
+%     nnmae = sprintf("OP-%d", ii);
+%     opname = [opname, nnmae];
+% end
+% write_vtk([RO'],opname, 3, false, pwd, "restriction", mesh, str2num(name(end-4)));
+% write_vtk([PO],opname, 3, false, pwd, "prolongation", mesh, str2num(name(end-4)));
+% 
+% 
+% toc
+% write_vtk([p],["mpfad"], 3, false, pwd, "pressure_speed", mesh, str2num(name(end-4)));
 
 size(mesh.element.centroid)
 1
